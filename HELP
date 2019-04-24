@@ -1,0 +1,1362 @@
+help:
+=============================================================================================================================================================================================================
+前言：
+谢谢music.cccyun.cc、moresound.tk这两个网站提供非常完善的api
+
+本文档是通过notepad++进行编辑，别的软件可能会出现问题
+
+如果你已经使用过并且熟练这个音乐工具，那么你可以忽略这个文件里面所写的内容了，你只需要关心它的漏洞修复以及新特性
+别人提供开放式的网站给我们使用，我们应该要珍惜与维护而不是恶意去攻击、破坏
+我非常抵制通过封装别人的项目、功能函数就说是自己的
+同时我也希望国内开发者可以有着开放精神而不是一味的索取、封闭
+
+本工具api完全基于jdk8原生工具框架进行封装、调用
+不存在第三方框架附加，如果提示缺少某种功能函数
+请更新jdk到1.8.0.161及以上
+
+=============================================================================================================================================================================================================
+
+帮助文档：这个工具支持QQ、酷狗、酷我、虾米、网易云基础音乐类型，扩展还有百度、咪咕、喜马拉雅、全民
+
+=============================================================================================================================================================================================================
+
+工具接口：
+WebMusic:
+普通音乐(基于官方api操作，效率最高、最不稳定)、新版本音乐(基于第三方网站实现，效率中和、稳定)
+WebMusicPro:
+高级音乐(基于第三方网站实现，效率最低、较稳定、功能最强大)
+=============================================================================================================================================================================================================
+
+接口实现类：
+实现：WebMusic:(implements)
+	OtherMusic
+	包含其所有支持的子类功能
+	NewOtherMusic
+	包含其所有支持的子类功能
+实现：WebMusicPro:(implements)
+	OtherMusicPro
+	包含其所有支持的子类功能
+	QQMusicProNoOhter
+	相对于原来版本而言,当前版本加入更多的功能,多线程下载歌曲、歌单,支持页数选择、不再规定死页数,支持歌曲音质选择,支持歌单音质选择
+=============================================================================================================================================================================================================
+
+功能类：
+OtherMusic：
+	---CloudMusic163(extends)
+	网易云音乐功能实现类
+	---KuGou(extends)
+	酷狗音乐功能实现类
+	---KuWoMusic(extends)
+	酷我音乐功能实现类
+	---QQMusic(extends)
+	QQ音乐功能实现类
+	---XiaMiMusic(extends)(已过时)
+	虾米音乐功能实现类
+	
+NewOtherMusic：
+	---NewCloudMusic163(extends)
+	网易云音乐功能实现类
+	---NewKuGou(extends)
+	酷狗音乐功能实现类
+	---NewKuWoMusic(extends)
+	酷我音乐功能实现类
+	---NewQQMusic(extends)
+	QQ音乐功能实现类
+	---NewXiaMiMusic(extends)
+	虾米音乐功能实现类
+
+OtherMusicPro：
+	---CloudMusic163Pro(extends)
+	网易云音乐功能实现类
+	---KuGouPro(extends)
+	酷狗音乐功能实现类
+	---KuWoMusicPro(extends)
+	酷我音乐功能实现类
+	---QQMusicPro(extends)
+	QQ音乐功能实现类
+	---XiaMiMusicPro(extends)
+	虾米音乐功能实现类
+
+QQMusicProNoOhter(官方api实现)
+基于QQ音乐官方api实现类
+=============================================================================================================================================================================================================
+
+工具类：
+WebMusicTools：(class)
+音乐工具类主要实现类
+	OtherMusicUtils:(extends)
+	普通音乐工具类
+	NewOtherMusicUtils:(extends)
+	新版本音乐工具类
+	---MusicType:(extends)
+		音乐类型
+	OtherMusicProUtils:(extends)
+	高级音乐工具类
+	CloudMusic163Tool:(extends)
+	普通网易云音乐工具类
+	KuGouTool:(extends)
+	酷狗音乐工具类
+	KuWoMusicTool:(extends)
+	酷我音乐工具类
+	QQMusicTool:(extends)
+	QQ音乐工具类
+	XiaMiTool:(extends)
+	虾米音乐工具类
+	QQMusicProUtils:(extends)
+	QQ音乐高级版工具类(独立)
+MusicTypeList:(class)
+用来获取音乐类型
+CloudUnlock:(class)
+网易云解密工具类
+LinkList:(class)
+各个音乐接口的整合类
+MusicFormat:(class)
+音乐类型选择
+MusicTypePro:(class)
+用来获取音乐高级版类型
+=============================================================================================================================================================================================================
+
+音乐信息类：
+WebMusicInfo：(class)
+适用于OtherMusic、NewOtherMusic
+WebMusicProInfo：(继承WebMusicInfo)
+适用于OtherMusicPro
+=============================================================================================================================================================================================================
+
+接口方法名注解
+接口：WebMusic：(interface)
+
+public void getInfo(String search_name);
+该函数是用来输出获取到的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public void getInfo(String search_name, int maxpage);
+该函数是用来输出获取到的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void getInfo(String search_name , int startPage , int endPage);
+该函数打印从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public String getInfoToString(String search_name);
+该函数返回字符串类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public String getInfoToString(String search_name, int maxpage);
+该函数返回字符串类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public String getInfoToString(String search_name, int startPage , int endPage);
+该函数返回字符串从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public String[] getInfoToStringArray(String search_name);
+该函数返回字符串数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public String[] getInfoToStringArray(String search_name, int maxpage);
+该函数返回字符串数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public String[] getInfoToStringArray(String search_name, int startPage , int endPage);
+该函数返回字符串数组从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public WebMusicInfo[] getInfoToWebMusicInfo(String search_name);
+该函数返回WebMusicInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public WebMusicInfo[] getInfoToWebMusicInfo(String search_name, int maxpage);
+该函数返回WebMusicInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public WebMusicInfo[] getInfoToWebMusicInfo(String search_name, int startPage , int endPage);
+该函数返回WebMusicInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void getMusicList(String link);
+该函数是用来输出歌单的内容信息
+String link：需要获取内容信息的歌单链接
+
+public String getMusicListToString(String link);
+该函数返回字符串类型的歌单内容信息
+String link：需要获取内容信息的歌单链接
+
+public String[] getMusicListToStringArray(String link);
+该函数返回字符串数组类型的歌单内容信息
+String link：需要获取内容信息的歌单链接
+
+public WebMusicInfo[] getMusicListToWebMusicInfo(String link);
+该函数返回WebMusicInfo数组类型的搜索内容信息
+String link：需要获取内容信息的歌单链接
+
+public void DownloadAll(String search_name);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+
+public void DownloadAll(String search_name, String savePath);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void DownloadAll(String search_name, String savePath, int maxpage);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void DownloadAll(String search_name, int startPage , int endPage);
+该函数是用来下载获取到的搜索内容
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadAll(String search_name , String savePath, int startPage , int endPage);
+该函数是用来下载获取到的搜索内容
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadList(String link);
+该函数是用来下载歌单的内容
+String link：需要获取内容信息的歌单链接
+
+public void DownloadList(String link, String savePath);
+该函数是用来下载歌单的内容
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void setCookie(String cookie);
+该函数设置cookie内容
+
+public String getCookie();
+该函数返回cookie内容
+
+public String getUserAgent();
+该函数返回UserAgent内容
+
+public void setUserAgent(String userAgent);
+该函数设置UserAgent内容
+
+=============================================================================================================================================================================================================
+
+接口：WebMusicPro：(interface)
+
+public void getInfo(String search_name);
+该函数是用来输出获取到的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public void getInfo(String search_name, int maxpage);
+该函数是用来输出获取到的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void getInfo(String search_name , int startPage , int endPage);
+该函数打印从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public String getInfoToString(String search_name);
+该函数返回字符串类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public String getInfoToString(String search_name, int maxpage);
+该函数返回字符串类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public String getInfoToString(String search_name, int startPage , int endPage);
+该函数返回字符串从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public String[] getInfoToStringArray(String search_name);
+该函数返回字符串数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public String[] getInfoToStringArray(String search_name, int maxpage);
+该函数返回字符串数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public String[] getInfoToStringArray(String search_name, int startPage , int endPage);
+该函数返回字符串数组从xx页到xx页的数据
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public WebMusicProInfo[] getInfoToWebMusicProInfo(String search_name);
+该函数返回WebMusicProInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+
+public WebMusicProInfo[] getInfoToWebMusicProInfo(String search_name, int maxpage);
+该函数返回WebMusicProInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public WebMusicProInfo[] getInfoToWebMusicProInfo(String search_name, int startPage , int endPage);
+该函数返回WebMusicProInfo数组类型的搜索内容信息
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public WebMusicProInfo[] getMusicListToWebMusicProInfo(String link);
+该函数返回WebMusicProInfo数组类型的搜索内容信息
+String link：需要获取内容信息的歌单链接
+
+public void getMusicList(String link);
+该函数是用来输出歌单的内容信息
+String link：需要获取内容信息的歌单链接
+
+public String getMusicListToString(String link);
+该函数返回字符串类型的歌单内容信息
+String link：需要获取内容信息的歌单链接
+
+public String[] getMusicListToStringArray(String link);
+该函数返回字符串数组类型的歌单内容信息
+String link：需要获取内容信息的歌单链接
+
+public void DownloadAll(String search_name);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+
+public void DownloadAll(String search_name, String savePath);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void DownloadAll(String search_name, String savePath, int maxpage);
+该函数是用来下载获取到的搜索内容
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void DownloadAll(String search_name, int startPage , int endPage);
+该函数是用来下载获取到的搜索内容
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadAll(String search_name , String savePath, int startPage , int endPage);
+该函数是用来下载获取到的搜索内容
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadApe(String search_name);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+
+public void DownloadApe(String search_name ,String savePath);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void DownloadApe(String search_name , int maxpage);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void DownloadApe(String search_name  ,String savePath, int maxpage);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void DownloadApe(String search_name , int startPage , int endPage);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadApe(String search_name ,String savePath , int startPage , int endPage);
+该函数提供下载音乐无损音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadFlac(String search_name);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+
+public void DownloadFlac(String search_name ,String savePath);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void DownloadFlac(String search_name , int maxpage);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void DownloadFlac(String search_name  ,String savePath, int maxpage);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void DownloadFlac(String search_name , int startPage , int endPage);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadFlac(String search_name ,String savePath , int startPage , int endPage);
+该函数提供下载音乐高品音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void Download320k(String search_name);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+
+public void Download320k(String search_name ,String savePath);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void Download320k(String search_name , int maxpage);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void Download320k(String search_name  ,String savePath, int maxpage);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void Download320k(String search_name , int startPage , int endPage);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void Download320k(String search_name ,String savePath , int startPage , int endPage);
+该函数提供下载音乐一般音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void Download128k(String search_name);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+
+public void Download128k(String search_name ,String savePath);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void Download128k(String search_name , int maxpage);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void Download128k(String search_name  ,String savePath, int maxpage);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void Download128k(String search_name , int startPage , int endPage);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void Download128k(String search_name ,String savePath , int startPage , int endPage);
+该函数提供下载音乐较差音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadM4a(String search_name);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+
+public void DownloadM4a(String search_name ,String savePath);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+
+public void DownloadM4a(String search_name , int maxpage);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+int maxpage：需要获取的最大页面数量
+
+public void DownloadM4a(String search_name  ,String savePath, int maxpage);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int maxpage：需要获取的最大页面数量
+
+public void DownloadM4a(String search_name , int startPage , int endPage);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadM4a(String search_name ,String savePath , int startPage , int endPage);
+该函数提供下载音乐最低音质
+String search_name：需要搜索的歌曲名称
+String savePath：需要保存的路径
+int startPage：需要开始的页面位置
+int endPage：需要结束的页面位置
+
+public void DownloadList(String link);
+该函数是用来下载歌单的内容
+String link：需要获取内容信息的歌单链接
+
+public void DownloadList(String link, String savePath);
+该函数是用来下载歌单的内容
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void DownloadApeList(String link);
+该函数提供下载歌单无损音质
+String link：需要获取内容信息的歌单链接
+
+public void DownloadApeList(String link ,String savePath );
+该函数提供下载歌单无损音质
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void DownloadFlacList(String link);
+该函数提供下载歌单高品音质
+String link：需要获取内容信息的歌单链接
+
+public void DownloadFlacList(String link ,String savePath );
+该函数提供下载歌单高品音质
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void Download320kList(String link);
+该函数提供下载歌单一般音质
+String link：需要获取内容信息的歌单链接
+
+public void Download320kList(String link ,String savePath );
+该函数提供下载歌单一般音质
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void Download128kList(String link);
+该函数提供下载歌单较差音质
+String link：需要获取内容信息的歌单链接
+
+public void Download128kList(String link ,String savePath );
+该函数提供下载歌单较差音质
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+
+public void DownloadM4aList(String link);
+该函数提供下载歌单最低音质
+String link：需要获取内容信息的歌单链接
+
+public void DownloadM4aList(String link ,String savePath );
+该函数提供下载歌单最低音质
+String link：需要获取内容信息的歌单链接
+String savePath：需要保存的路径
+=============================================================================================================================================================================================================
+
+功能类方法注解：
+类：OtherMusic:(class)
+实现于WebMusic:(interface)
+
+public String checkType(String type)
+该函数用于配置音乐类型
+String type：传入的音乐类型
+
+public String checkSave(String save)
+该函数用于配置保存路径
+String save：传入保存路径
+
+public void setMusicType(String musicType)
+该函数用于设置音乐类型
+如果没有设置音乐类型，那么它会使用默认的类型:酷狗音乐
+String musicType：传入的音乐类型
+
+public void setSavePath(String savePath)
+该函数用于设置保存路径
+如果没有设置保存路径，那么它会使用默认的路径:"e:\\WebMusic\\OtherMusic\\"
+String savePath：传入保存路径
+
+public String getMusicType()
+该函数用于获取音乐类型
+
+public String getSavePath()
+该函数用于获取保存路径
+=============================================================================================================================================================================================================
+
+类：NewOtherMusic:(class)
+实现于WebMusic:(interface)
+
+public String checkType(String type)
+该函数用于配置音乐类型
+String type：传入的音乐类型
+
+public String checkSave(String save)
+该函数用于配置保存路径
+String save：传入保存路径
+
+public void setMusicType(String musicType)
+该函数用于设置音乐类型
+如果没有设置音乐类型，那么它会使用默认的类型:酷狗音乐
+String musicType：传入的音乐类型
+
+public void setSavePath(String savePath)
+该函数用于设置保存路径
+如果没有设置保存路径，那么它会使用默认的路径:"e:\\WebMusic\\OtherMusic\\"
+String savePath：传入保存路径
+
+public String getMusicType()
+该函数用于获取音乐类型
+
+public String getSavePath()
+该函数用于获取保存路径
+
+private void p()
+该函数用于输出："此版本不再支持此功能"
+=============================================================================================================================================================================================================
+类：OtherMusicPro:(class)
+实现于WebMusicPro:(interface)
+
+public String checkType(String type)
+该函数用于配置音乐类型
+String type：传入的音乐类型
+
+public String checkSave(String save)
+该函数用于配置保存路径
+String save：传入保存路径
+
+public OtherMusicProUtils checkCookie(String cookie)
+该函数用于配置Cookie并返回OtherMusicProUtils对象
+String cookie：传入Cookie
+
+public int checkNum(int num) 
+该函数用于配置音乐的数量
+int num：输入需要获取音乐的最大数量
+
+public void setType(String type)
+该函数用于设置音乐类型
+如果没有设置音乐类型，那么它会使用默认的类型:酷狗音乐
+String type：传入的音乐类型
+
+public void setSavePath(String savePath)
+该函数用于设置保存路径
+如果没有设置保存路径，那么它会使用默认的路径:"e:\\WebMusic\\OtherMusic\\"
+String savePath：传入保存路径
+
+public void setCookie(String cookie)
+该函数用于设置Cookie的值
+String cookie：传入Cookie
+
+public void setMusicNum(int musicNum)
+该函数用于设置音乐的数量
+int musicNum：输入需要获取音乐的最大数量
+
+public String getType()
+该函数用于获取音乐类型
+
+public String getSavePath()
+该函数用于获取保存路径
+
+public int getMusicNum()
+该函数用于获取音乐数量
+
+public String getCookie()
+该函数用于获取cookie
+
+=============================================================================================================================================================================================================
+
+类：QQMusicProNoOhter:(class)
+实现于WebMusicPro:(interface)
+=============================================================================================================================================================================================================
+
+工具类方法注解：
+WebMusicTools：(class)
+
+public HttpURLConnection checkCon(String url_name) throws Exception
+该函数是用于配置GET请求参数并返回一个HttpURLConnection对象
+String url_name：目标链接、域名、网页地址
+
+public String checkFormat(String format , String song_id)
+该函数是用于配置QQ音乐格式并返回匹配后的内容
+String format：音乐格式
+String song_id：歌曲id
+
+public String checkOhterFormat(String format , String song_id , String Mtype)
+该函数是用于配置音乐格式并返回匹配后的内容
+String format：音乐格式
+String song_id：歌曲id
+String Mtype：音乐类型
+
+public void Downlaod(String url_name , String dirPath , String fileName , String format)
+该函数是用于下载歌曲，当然，你也可以用来下载别的内容，比如图像和视频
+String url_name：目标链接、域名、网页地址
+String dirPath：保存的文件夹路径
+String fileName：保存的文件名称
+String format：文件后缀
+
+public String getByJson(String src , String name)
+该函数是用来解析json数据
+String src：json数据
+String name：输入key的名称就可以获取所对应的值
+
+public String getByString(String src, String reg, String re_str)
+该函数是用于正则匹配(单次)
+String src：需要进行匹配的内容
+String reg：匹配的正则
+String re_str：需要移除的字符串内容(可空)
+
+public String getCookie()
+该函数是获取cookie的值
+
+public String getGzipPagesource(String url_name)
+该函数用于获取GZIP压缩格式的网页
+String url_name：目标链接、域名、网页地址
+
+public String getGzipPagesourceOnPost(String url_name , String parm)
+该函数用于获取POST请求的GZIP压缩网页
+String url_name：目标链接、域名、网页地址
+String parm：POST参数
+
+public String getHeader()
+该函数用于获取设置的请求头参数
+
+public String[] getHeaders()
+该函数用于获取设置的请求头参数数组
+
+public String getMusicListPageOnQQ(String link)
+该函数用于获取QQ音乐歌单页面
+String link：QQ音乐歌单链接
+
+public String getPagesource(String url_name)
+该函数用于获取网页
+String url_name：目标链接、域名、网页地址
+
+public String getPagesourceOnPost(String url_name , String parm)
+该函数用于获取POST请求的网页
+String url_name：目标链接、域名、网页地址
+String parm：POST参数
+
+public String getResponseHeader(String url_name , String key)
+该函数返回Response请求头的值
+String url_name：目标链接、域名、网页地址
+String key：输入key的名称就可以获取所对应的值
+
+public String getUserAgent()
+该函数用于获取UserAgent
+
+public void MultiThreadDownlaodMusic(String link , String fileName , String savePath , String format)
+该函数是用于进行多线程下载支持
+String link：目标链接、域名、网页地址
+String fileName：保存的文件名称
+String savePath：保存的文件夹路径
+String format：文件后缀
+
+public void printList(List<WebMusicInfo> l)
+遍历输出WebMusicInfo类型的List
+List<WebMusicInfo> l：输入WebMusicInfo类型的List
+
+public WebMusicInfo[] printListInfo(List<WebMusicInfo> l)
+返回WebMusicInfo数组
+List<WebMusicInfo> l：输入WebMusicInfo类型的List
+
+public WebMusicProInfo[] printListInfoOnPro(List<WebMusicProInfo> l)
+返回WebMusicProInfo数组
+List<WebMusicProInfo> l：输入WebMusicProInfo类型的List
+
+public void printListOnPro(List<WebMusicProInfo> l)
+遍历输出WebMusicProInfo类型的List
+List<WebMusicProInfo> l：输入WebMusicProInfo类型的List
+
+public String printListString(List<WebMusicInfo> l)
+返回遍历后WebMusicInfo类型的List字符串内容
+List<WebMusicInfo> l：输入WebMusicInfo类型的List
+
+public String[] printListStringArray(List<WebMusicInfo> l)
+返回遍历后WebMusicInfo类型的List字符串数组
+List<WebMusicInfo> l：输入WebMusicInfo类型的List
+
+public String[] printListStringArrayOnPro(List<WebMusicProInfo> l)
+返回遍历后WebMusicProInfo类型的List字符串数组
+List<WebMusicProInfo> l：输入WebMusicProInfo类型的List
+
+public String printListStringOnPro(List<WebMusicProInfo> l) 
+返回遍历后WebMusicProInfo类型的List字符串内容
+List<WebMusicProInfo> l：输入WebMusicProInfo类型的List
+
+public String read(String filePath)
+该函数用于读取本地文件内容
+String filePath：文件路径
+
+public void setCookie(String cookie)
+该函数用于设置Cookie的值
+String cookie：传入cookie的值
+
+public void setHeader(String header)
+该函数用于设置请求头
+String header：传入请求头
+
+public void setHeaders(String[] headers)
+该函数用于设置请求头数组
+String[] headers：传入请求头数组
+
+public void setUserAgent(String userAgent)
+该函数用于设置UserAgent
+String userAgent：传入UserAgent
+
+public void sleep(int times)
+该函数用于线程休眠
+int times：传入休眠的值(毫秒)
+
+public String StringToEncode(String src, String encode)
+该函数返回字符串编码转换后的内容
+String src：源字符串
+String encode：需要转换的编码
+
+public String StringToUnicode(String string)
+该函数返回字符串转Unicode编码后的内容
+String string：需要进行转换的字符串
+
+public String UnicodeToString(String unicode)
+该函数返回Unicode编码转字符串后的内容
+String unicode：需要进行字符串转换的Unicode值
+
+public String URLEncode(String src)
+该函数返回用于将中文字符串转义为URL可以认识的内容
+String src：需要进行转换的链接
+=============================================================================================================================================================================================================
+
+MusicTypeList:(class)
+存放音乐类型
+
+	 设置音乐类型为咪咕音乐 
+	public final static String TYPE_MIGU = "migu";
+	 设置音乐类型为荔枝音乐 
+	public final static String TYPE_LIZHI = "lizhi";
+	 设置音乐类型为蜻蜓音乐 
+	public final static String TYPE_QINGTING = "qingting";
+	 设置音乐类型为喜马拉雅音乐 
+	public final static String TYPE_XIMA = "ximalaya";
+	 设置音乐类型为百度音乐 
+	public final static String TYPE_BAIDU = "baidu";
+	 设置音乐类型为一听音乐 
+	public final static String TYPE_YITING = "1ting";
+	 设置音乐类型为全民K歌音乐 
+	public final static String TYPE_QUANMIN = "kg";
+	 设置音乐类型为5sing原创音乐 
+	public final static String TYPE_5SINGY = "5singyc";
+	 设置音乐类型为5sing翻唱 音乐 
+	public final static String TYPE_5SINGFC = "5singfc";
+	 设置音乐类型为酷狗 音乐 
+	public final static String TYPE_KUGOU = "kugou";
+	 设置音乐类型为QQ音乐 
+	public final static String TYPE_QQ = "qq";
+	 设置音乐类型为虾米音乐 
+	public final static String TYPE_XIAMI = "xiami";
+	 设置音乐类型为酷我音乐 
+	public final static String TYPE_KUWO = "kuwo";
+	 设置音乐类型为网易云音乐 
+	public final static String TYPE_CLOUD163 = "netease";
+=============================================================================================================================================================================================================
+
+CloudUnlock:(class)
+aes解密，具体函数是什么作用我也不清楚
+=============================================================================================================================================================================================================
+
+LinkList:(class)
+主要用于存储相关音乐api
+=============================================================================================================================================================================================================
+
+MusicFormat:(class)
+设置音乐类型以及格式
+=============================================================================================================================================================================================================
+
+MusicTypePro:(class)
+设置高级版音乐类型
+=============================================================================================================================================================================================================
+工具类子类方法注解：
+OtherMusicUtils(class)
+继承WebMusicTools(class)
+
+public void checkMusicInfo(String search_name, int i, List<WebMusicInfo> l, String type)
+用于配置获取音乐类型的音乐信息
+String search_name：搜索的音乐名称
+int i：音乐获取的页数、数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+String type：音乐类型
+
+public void checkMusicList(String link, List<WebMusicInfo> l, String type)
+用于配置获取歌单里音乐信息
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+String type：音乐类型
+
+public void CLOUD163InfoList(String search_name, int music_num, List<WebMusicInfo> l)
+网易云音乐信息获取
+String search_name：搜索的音乐名称
+int music_num：音乐获取数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void CLOUD163MusicList(String link, List<WebMusicInfo> l)
+网易云歌单音乐信息获取
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void KUGOUInfoList(String search_name, int i, List<WebMusicInfo> l)
+酷狗音乐信息获取
+String search_name：搜索的音乐名称
+int music_num：音乐获取数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void KUGOUMusicInfoList(String link, List<WebMusicInfo> l) 
+酷狗歌单音乐信息获取
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void KUWOInfoList(String search_name, int i, List<WebMusicInfo> l)
+酷我音乐信息获取
+String search_name：搜索的音乐名称
+int music_num：音乐获取数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void KUWOMusicInfoList(String link, List<WebMusicInfo> l) 
+酷我歌单音乐信息获取
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void QQInfoList(String search_name, int i, List<WebMusicInfo> l)
+QQ音乐信息获取
+String search_name：搜索的音乐名称
+int music_num：音乐获取数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void QQMusicList(String link, List<WebMusicInfo> l) 
+QQ歌单音乐信息获取
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void XiaMiSong(String search_name, int i, List<WebMusicInfo> l)
+虾米音乐信息获取
+String search_name：搜索的音乐名称
+int music_num：音乐获取数量
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void XiaMiMusicList(String link, List<WebMusicInfo> l) 
+虾米歌单音乐信息获取
+String link：歌单链接
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public List<WebMusicInfo> getInfoList(String search_name, int startPage, int endPage, String type)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String search_name：搜索的音乐名称
+int startPage：开始的页面
+int endPage：结束的页面
+String type：音乐类型
+
+public List<WebMusicInfo> getInfoList(String search_name, int maxpage, String type)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String search_name：搜索的音乐名称
+int maxpage：需要获取的最大页面数量
+String type：音乐类型
+
+public List<WebMusicInfo> getInfoList(String search_name, String type)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String search_name：搜索的音乐名称
+String type：音乐类型
+
+public List<WebMusicInfo> getMusicList(String link, String type)
+该函数用来获取歌单音乐信息并返回WebMusicInfo类型的List
+String link：歌单链接
+String type：音乐类型
+
+=============================================================================================================================================================================================================
+
+NewOtherMusicUtils(class)
+继承WebMusicTools(class)
+
+public List<WebMusicInfo> getInfoList(String music_name, int startPage, int endPage, String type)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String music_name：搜索的音乐名称
+int startPage：开始的页面
+int endPage：结束的页面
+String type：音乐类型
+
+public List<WebMusicInfo> getInfoList(String music_name, String type)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String music_name：搜索的音乐名称
+String type：音乐类型
+
+public List<WebMusicInfo> getInfoList(String music_name, String type, int maxpage)
+该函数用来获取音乐信息并返回WebMusicInfo类型的List
+String music_name：搜索的音乐名称
+String type：音乐类型
+int maxpage：需要获取的最大页面数量
+
+public void InfoList(String music_name, String type, int page, List<WebMusicInfo> list)
+该函数用来获取音乐信息
+String music_name：搜索的音乐名称
+String type：音乐类型
+int page：需要获取的歌曲页面
+List<WebMusicInfo> list：传入WebMusicInfo类型的List
+
+----------------------------------------------------------------------====================================
+
+MusicType(class)
+继承NewOtherMusicUtils(class)
+
+public String getMusicList()
+获取音乐类型属性并返回字符串
+
+public String[] getMusicTypeArray()
+获取音乐类型属性并返回字符串数组
+
+public void printMusicList()
+获取音乐类型属性并输出
+
+
+=============================================================================================================================================================================================================
+
+OtherMusicProUtils(class)
+继承WebMusicTools(class)
+
+public void BD(String s, WebMusicProInfo w)
+存放千千音乐(百度音乐)歌曲各个音质直链
+String s：返回的歌曲信息json列表
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public void Cloud163(String s, WebMusicProInfo w)
+存放网易云音乐歌曲各个音质直链
+String s：返回的歌曲信息json列表
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public void CloudMusic163MusicList(String page, List<WebMusicProInfo> list)
+存储网易云音乐歌单信息
+String page：歌单页面内容
+List<WebMusicProInfo> list：带WebMusicProInfo的list
+
+public String getDownload(String apiPhp)
+获取歌曲真实下载链接
+String apiPhp：网站的链接
+
+public List<WebMusicProInfo> getInfoList(String search_name, int startPage, int endPage, int music_num, String type)
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的内容
+int startPage：页面开始的位置
+int endPage：页面结束的位置
+int music_num：一页歌曲的数量(只能是数字，而且最低只能是11)
+String type：音乐类型
+
+public List<WebMusicProInfo> getInfoList(String search_name, int maxpage, int music_num, String type)
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的内容
+int maxpage：最大页面数量(只能是整数型)
+int music_num：一页歌曲的数量(只能是数字，而且最低只能是11)
+String type：音乐类型
+
+public List<WebMusicProInfo> getInfoList(String search_name, int music_num, String type)
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的内容
+int music_num：一页歌曲的数量(只能是数字，而且最低只能是11)
+String type：音乐类型
+
+public String getLink()
+返回设置的链接
+
+public List<WebMusicProInfo> getMusicListInfo(String link, String type)
+获取歌单里歌曲的信息并返回一个带有WebMusicProInfo的List
+String link：歌单链接
+String type：音乐类型
+
+public WebMusicProInfo Info(String song_id, String type)
+获取歌曲相关信息并返回一个WebMusicProInfo对象
+String song_id：歌曲id
+String type：音乐类型
+
+public void KuGou(String s, WebMusicProInfo w)
+存放酷狗音乐歌曲各个音质直链
+String s：返回的歌曲信息json列表
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public void KuGouMusicList(String page, List<WebMusicProInfo> list)
+存储酷狗音乐歌单信息
+String page：歌单页面内容
+List<WebMusicProInfo> list：带WebMusicProInfo的list
+
+public void KuWo(String s, WebMusicProInfo w)
+存放酷我音乐歌曲各个音质直链
+String s：返回的歌曲信息json列表
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public void KuWoMusicList(String page, List<WebMusicProInfo> list)
+存储酷我音乐歌单信息
+String page：歌单页面内容
+List<WebMusicProInfo> list：带WebMusicProInfo的list
+
+public void XiaMi(String s, WebMusicProInfo w)
+存放虾米音乐歌曲各个音质直链
+String s：返回的歌曲信息json列表
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public void XiaMiMusicList(String page, List<WebMusicProInfo> list)
+存储虾米音乐歌单信息
+String page：歌单页面内容
+List<WebMusicProInfo> list：带WebMusicProInfo的list
+
+public void setLink(String link)
+设置链接
+
+=============================================================================================================================================================================================================
+
+CloudMusic163Tool(class)
+继承WebMusicTools(class)
+
+public WebMusicInfo getSongInfo(String song_id)
+获取音乐信息
+String song_id：歌曲id
+=============================================================================================================================================================================================================
+
+KuGouTool(class)
+继承WebMusicTools(class)
+
+public void InfoList(String data, List<WebMusicInfo> l)
+String data：歌曲页面
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public void PrivateInfoList(String data, String Auxiliary, List<WebMusicInfo> l)
+String data：歌曲页面
+String Auxiliary：歌曲出处
+List<WebMusicInfo> l：带有WebMusicInfo的List
+=============================================================================================================================================================================================================
+
+KuWoMusicTool(class)
+继承WebMusicTools(class)
+
+public WebMusicInfo Info(String song_id)
+获取音乐信息
+String song_id：歌曲id
+=============================================================================================================================================================================================================
+
+QQMusicTool(class)
+继承WebMusicTools(class)
+
+public String getDownLink(String song_id) 
+返回下载链接
+String song_id：歌曲id
+
+public String getMusicListPage(String link)
+返回歌单内容
+String link：歌单链接
+
+public WebMusicInfo getSongInfo(String song_id, String mvid, String aux)
+获取歌曲信息并返回一个WebMusicInfo对象
+String song_id：歌曲id
+String mvid：mvid
+String aux：歌曲出处
+
+public void PriInfo(String data, List<WebMusicInfo> l)
+获取歌曲id、视频id(mv_id)，歌曲出处
+String data：歌曲页面
+List<WebMusicInfo> l：带有WebMusicInfo的List
+
+public String ran(int n)
+随机生成n位整数型数字并返回为字符串
+int n：生成的数字长度
+=============================================================================================================================================================================================================
+
+XiaMiTool(class)
+继承WebMusicTools(class)
+
+public String getLoaction(String song_id)
+获取loaction值并返回为字符串
+String song_id：歌曲id
+
+public WebMusicInfo getSongInfo(String song_id)
+获取歌曲信息并返回一个WebMusicInfo对象
+String song_id：歌曲id
+
+public String UnLockLoactionToString(String str)
+loaction值转码并返回字符串
+String str：传入loaction值
+=============================================================================================================================================================================================================
+
+QQMusicProUtils(class)
+继承WebMusicTools(class)
+
+public void getFormat(String song_id, WebMusicProInfo w)
+配置跟添加QQ音乐各个音质
+String song_id：歌曲id
+WebMusicProInfo w：WebMusicProInfo实例对象
+
+public List<WebMusicProInfo> getInfoList(String search_name)
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的音乐名称
+
+public List<WebMusicProInfo> getInfoList(String search_name , int maxpage)
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的音乐名称
+int maxpage：需要获取的最大页面数量
+
+public List<WebMusicProInfo> getInfoList(String search_name , int startPage , int endPage )
+获取歌曲信息并返回一个带有WebMusicProInfo的List
+String search_name：搜索的音乐名称
+int startPage：页面开始的位置
+int endPage：页面结束的位置
+
+public List<WebMusicProInfo> getMusicInfoList(String link)
+获取歌单歌曲信息并返回一个带有WebMusicProInfo的List
+String link：歌单链接
+
+public WebMusicProInfo getSongInfo(String song_id, String mvid, String aux)
+获取歌曲相关信息并返回一个WebMusicProInfo对象
+String song_id：歌曲id
+String mvid：mvid
+String aux：歌曲出处
+=============================================================================================================================================================================================================
+
+音乐信息类方法注解：
+类：WebMusicInfo：(class)
+
+public String getAlbumName() 
+获取歌曲专辑的名称并返回为字符串
+
+public String getAllToCloud()
+获取网易云所有歌曲的信息并返回为字符串
+
+public String getAllToKuGou() 
+获取酷狗所有的信息并返回为字符串
+
+public String getAllToXiaMi()
+获取虾米所有歌曲的信息并返回为字符串
+
+public String getAuxiliary()
+获取歌曲的出处并返回为字符串
+
+public String getDownloadLink()
+获取歌曲的下载链接并返回为字符串
+
+public String getFileName()
+获取歌曲的名称并返回为字符串
+
+public String getMusicHash()
+获取歌曲的唯一特征并返回为字符串
+
+public String getMusicImg()
+获取歌曲或者歌手的写真并返回为字符串
+
+public String getMusicName()
+获取歌曲的名称并返回为字符串
+
+public String getNewWebMusic()
+获取新版音乐歌曲所有的信息并返回为字符串
+
+public String getSingerName()
+获取歌手的名称并返回为字符串
+
+public String getVideoId()
+获取歌曲视频唯一ID并返回为字符串
+
+public void setAlbumName(String albumName)
+设置歌曲专辑的名称
+String albumName：歌曲专辑名称
+
+public void setAuxiliary(String auxiliary)
+设置歌曲的出处
+String auxiliary：歌曲的出处
+
+public void setDownloadLink(String downloadLink) 
+设置歌曲的下载链接
+String downloadLink：歌曲的下载链接
+
+public void setFileName(String fileName)
+设置歌曲文件的名称
+String fileName：歌曲文件的名称
+
+public void setMusicHash(String musicHash)
+设置歌曲的唯一特征
+String musicHash：歌曲的唯一特征
+
+public void setMusicImg(String musicImg)
+设置歌曲或者歌手的写真
+String musicImg：歌手的写真
+
+public void setMusicName(String musicName)
+设置歌曲名称
+String musicName：歌曲名称
+
+public void setSingerName(String singerName)
+设置歌手的名称
+String singerName：歌手的名称
+
+public void setVideoId(String videoId)
+设置歌曲视频唯一ID
+String videoId：歌曲视频唯一ID
+=============================================================================================================================================================================================================
+
+类：WebMusicInfoPro：(class)
+继承于：WebMusicInfo：(class)
+
+public String getAPE()
+获取无损音质并返回字符串
+
+public String getFLAC()
+获取高品音质并返回字符串
+
+public String getM320k()
+获取一般音质并返回字符串
+
+public String getM128k()
+获取较差音质并返回字符串
+
+public String getM4a()
+获取最低音质并返回字符串
+
+public String getQQProAll()
+获取QQ高级版所需要的歌曲信息并返回为字符串
+
+public void setAPE(String aPE)
+设置无损音质链接
+String aPE：无损音质链接
+
+public void setFLAC(String fLAC)
+设置高品音质链接
+String fLAC：高品音质链接
+
+public void setM320k(String m320k)
+设置一般音质链接
+String m320k：一般音质链接
+
+public void setM128k(String m128k)
+设置较差音质链接
+String m128k：较差音质链接
+
+public void setM4a(String m4a)
+设置最低音质链接
+String m4a：最低音质链接
+=============================================================================================================================================================================================================
+
+=============================================================================================================================================================================================================
+
+
+=============================================================================================================================================================================================================
+
+
+=============================================================================================================================================================================================================
