@@ -45,7 +45,7 @@ import com.WebMusic.util.WebMusicTools;
  * </pre>
  * <p>
  * 注解时间: 2019年2月1日
- * 
+ * 修改时间: 2020年2月23日
  * @version 1.0
  * @since JDK 1.8 文件名称：OtherMusic.java
  */

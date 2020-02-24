@@ -40,7 +40,7 @@ public class QQMusicTool extends WebMusicTools {
 		WebMusicInfo musicInfo = new WebMusicInfo();
 		String ss = checkAndroid(LinkList.QQMusicSongInfoLink + song_id + ".html");
 		String value_str = "";
-		Matcher JsonArray = Pattern.compile("g_SongData =(.+?\\};)").matcher(ss);
+		Matcher JsonArray = Pattern.compile("g_SongData=(.+?\\};)").matcher(ss);
 		Matcher Img = Pattern.compile("background-image:url(.+?\\))").matcher(ss);
 		if (JsonArray.find() && Img.find()) {
 			value_str = JsonArray.group().replaceAll("g_SongData = ", "");
@@ -65,12 +65,12 @@ public class QQMusicTool extends WebMusicTools {
 	 * 需要传入两个参数,歌曲详细信息页面、WebMusicInfo类型的list接口
 	 */
 	public void PriInfo(String data, List<WebMusicInfo> l) {
-		Matcher id = Pattern.compile("songmid\":\"(.+?\")").matcher(data);
-		Matcher mid = Pattern.compile("vid\":\"(.+?\")").matcher(data);
+		Matcher mid = Pattern.compile("songmid\":\"(.+?\")").matcher(data);
+		Matcher vid = Pattern.compile("vid\":\"(.+?\")").matcher(data);
 		Matcher aux = Pattern.compile("lyric\":\"(.+?\")").matcher(data);
-		while (id.find() && mid.find() && aux.find()) {
-			l.add(getSongInfo(id.group().replaceAll("songmid|:|\"", ""),
-					mid.group().replaceAll("vid|:|\"|(\\}|\\{|\\]|\\[)|,", ""),
+		while(mid.find() && vid.find() && aux.find()) {
+			addMusic(l, getSongInfo(mid.group().replaceAll("songmid|:|\"", ""),
+					vid.group().replaceAll("vid|:|\"", ""),
 					aux.group().replaceAll("lyric|:|\"|,", "")));
 		}
 	}

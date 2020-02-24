@@ -13,6 +13,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -37,6 +38,7 @@ import com.WebMusicPro.util.WebMusicProInfo;
 * */
 public class WebMusicTools {
 	
+	public String math=":\"(.+?\")";
 	public final static String cookie_bak = "",
 			ua_bak = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
 			match_s = "\"(.+?\")", kg_re_str = ":|,|\"", kg_match_str = "\":" + match_s,
@@ -57,6 +59,17 @@ public class WebMusicTools {
 			"accept-language: zh-CN,zh;q=0.9"
 	};
 	
+	public String doghs[] = {
+			"accept: text/html,application/xhtml,xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" , 
+			"accept-encoding: gzip, deflate, br" , 
+			"accept-language: zh-CN,zh;q=0.9" , 
+			"cache-control: max-age=0" , 
+			"cookie: kg_mid=6620da3132838588a74411987e879df3; kg_dfid=3dpiLo2jOchb0KlwMq05UWYD; ACK_SERVER_10016=%7B%22list%22%3A%5B%5B%22bjreg-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10015=%7B%22list%22%3A%5B%5B%22bjlogin-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10017=%7B%22list%22%3A%5B%5B%22bjverifycode.service.kugou.com%22%5D%5D%7D; Hm_lvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; Hm_lpvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e" , 
+			"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36" , 
+			"Host: www.kugou.com" 
+	};
+	
+	
 	private boolean isAndroid = false;
 	
 	public String getHeader() {
@@ -74,7 +87,13 @@ public class WebMusicTools {
 	public void setHeaders(String[] headers) {
 		this.headers = headers;
 	}
-
+	
+	public void addMusic(List<WebMusicInfo> l , WebMusicInfo musicInfo) {
+		if(musicInfo.getMusicName() != null && !musicInfo.getMusicName().equals("") && musicInfo.getMusicName().length() >0 && musicInfo.getAllToCloud().indexOf("</") == -1) {
+			l.add(musicInfo);
+		}
+	}
+	
 	/**
 	 * <p>
 	 * 获取response的头部
@@ -168,14 +187,15 @@ public class WebMusicTools {
 	}
 	
 	/**配置是否为Android开发环境*/
+	public String checkAndroid(String url , String headers[]) {
+		url=url.replaceAll("\\s+", "");
+		String data = isAndroid() ? getPagesource(url) : getGzipPagesource(url,headers);
+		return data.replaceAll("\\s+", "");
+	}
+	
+	/**配置是否为Android开发环境*/
 	public String checkAndroid(String url) {
-		String data = "";
-		if(isAndroid()) {
-			data = getPagesource(url);
-		}else {
-			data = getGzipPagesource(url);
-		}
-		return data;
+		return checkAndroid(url, null);
 	}
 	
 	public String checkOhterFormat(String format , String song_id , String Mtype)
@@ -405,24 +425,13 @@ public class WebMusicTools {
 //		String ua_bak = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
 		HttpURLConnection huc = (HttpURLConnection) new URL(url_name).openConnection();
 		huc.setRequestMethod("GET");
-		if (getHeaders() != null) {
-			for (String s : getHeaders()) {
-				String array[] = s.split(":");
-				huc.setRequestProperty(array[0], array[1].replaceAll("\\s+", ""));
-			}
-		}
 		if (getHeader() != null) {
-			String array[] = getHeader().split(":");
-			huc.setRequestProperty(array[0], array[1].replaceAll("\\s+", ""));
-		}
-		if (getUserAgent() != null) {
-			huc.setRequestProperty("user-agent", getUserAgent());
-		} else {
-			huc.setRequestProperty("user-agent", ua_bak);
-			setUserAgent(ua_bak);
-		}
-		if (getCookie() != null) {
-			huc.setRequestProperty("cookie", getCookie());
+			huc.setRequestProperty(getHeader().split(":")[0], getHeader().split(":")[1].replaceAll("\\s+", ""));
+		} else if (getHeaders() != null) {
+			for (String s : getHeaders()) {
+				String arr[] = s.split(":");
+				huc.setRequestProperty(arr[0], arr[1].replaceAll("\\s+", ""));
+			}
 		}
 		return huc;
 	}
@@ -448,15 +457,16 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-
+	
 	/**
 	 * <p>
 	 * 获取gzip传输格式的网页内容
 	 */
 
-	public String getGzipPagesource(String url_name) {
+	public String getGzipPagesource(String url_name , String hs[]) {
 		String str = "" , line = "";
 		try {
+			setHeaders(hs);
 			if(getHeaders() == null) {
 				setHeaders(headers_bak);
 			}
@@ -470,6 +480,16 @@ public class WebMusicTools {
 			e.printStackTrace();
 		}
 		return str;
+	}
+	
+	
+	/**
+	 * <p>
+	 * 获取gzip传输格式的网页内容
+	 */
+
+	public String getGzipPagesource(String url_name) {
+		return getGzipPagesource(url_name, null);
 	}
 
 	/**
@@ -486,7 +506,7 @@ public class WebMusicTools {
 		}
 		return tmp;
 	}
-
+	
 	/**
 	 * <p>
 	 * 将字符串转义为Unicode编码

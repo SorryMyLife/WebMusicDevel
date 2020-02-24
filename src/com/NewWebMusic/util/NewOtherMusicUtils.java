@@ -35,7 +35,7 @@ public class NewOtherMusicUtils extends WebMusicTools {
 		String url_name = LinkList.NewWebMusicHost + "/?name=" + music_name + "&type=" + type, tmp = "";
 		String headers[] = { "Accept: application/json, text/javascript, */*; q=0.01", 
 				"Accept-Language: zh-CN,zh;q=0.9", "Connection: keep-alive",
-				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8", "Host: music.cccyun.cc",
+				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8", "Host: www.musictool.top",
 				"Origin: " + LinkList.NewWebMusicHost, "Referer: " + url_name, "X-Requested-With: XMLHttpRequest" };
 		try {
 			setHeaders(headers);

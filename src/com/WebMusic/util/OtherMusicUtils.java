@@ -20,17 +20,20 @@ import java.util.regex.Pattern;
 public class OtherMusicUtils extends WebMusicTools {
 
 	private String tmp;
-
+	
+	@Deprecated
 	public void XiaMiSong(String search_name, int i, List<WebMusicInfo> l) {
-
 		Matcher m = Pattern.compile("type=\"checkbox\"  value=\"\\d+\"").matcher(
 				checkAndroid(LinkList.XiaMiMusicSongSearchLinkHeadOld + LinkList.XiaMiMusicSongSearchNextPageLinkOld + i
 						+ LinkList.XiaMiMusicSongSearchKeyLinkOld + URLEncode(search_name)));
+		System.out.println(LinkList.XiaMiMusicSongSearchLinkHeadOld + LinkList.XiaMiMusicSongSearchNextPageLinkOld + i
+						+ LinkList.XiaMiMusicSongSearchKeyLinkOld + URLEncode(search_name));
 		while (m.find()) {
 			l.add(new XiaMiTool().getSongInfo(m.group().replaceAll("type=\"checkbox\"  value=|\"", "")));
 		}
 	}
-
+	
+	@Deprecated
 	public void XiaMiMusicList(String link, List<WebMusicInfo> l) {
 		Matcher m = Pattern.compile("href=\"/song/\\d+\"").matcher(checkAndroid(link));
 		while (m.find()) {
@@ -45,7 +48,7 @@ public class OtherMusicUtils extends WebMusicTools {
 		Matcher m = Pattern.compile("songmid\":(.+?\",)").matcher(page);
 		Matcher vid = Pattern.compile("\"vid\":(.+?\")").matcher(page);
 		while (m.find() && vid.find()) {
-			l.add(new QQMusicTool().getSongInfo(m.group().replaceAll("songmid|:|\"|,", ""),
+			addMusic(l, new QQMusicTool().getSongInfo(m.group().replaceAll("songmid|:|\"|,", ""),
 					vid.group().replaceAll("vid|:|\"", ""), "歌单类型不提供"));
 		}
 	}
@@ -56,25 +59,22 @@ public class OtherMusicUtils extends WebMusicTools {
 	}
 
 	public void KUWOInfoList(String search_name, int i, List<WebMusicInfo> l) {
-		Matcher MusicHash = Pattern.compile("MUSIC_\\d+(.+?title)")
+		Matcher MusicHash = Pattern.compile("MUSIC_\\d+\"")
 				.matcher(checkAndroid(LinkList.KuWoMusicSongSearchLink + URLEncode(search_name)
 						+ LinkList.KuWoMusicSongSearchLinkEnd + LinkList.KuWoMusicSongSearchLinkPage + i));
 		while (MusicHash.find()) {
-			l.add(new KuWoMusicTool().Info(MusicHash.group().replaceAll("title|\"|MUSIC_", "")));
+			addMusic(l,new KuWoMusicTool().InfoJson(MusicHash.group().replaceAll("MUSIC_|\"", "")));
 		}
 	}
 
 	public void KUWOMusicInfoList(String link, List<WebMusicInfo> l) {
 		String page = checkAndroid(link);
-		Matcher m = Pattern.compile("data-music=(.+?\",)").matcher(page);
+		Matcher m = Pattern.compile("MUSIC_\\d+\"").matcher(getByString(page, "musicList:(.+?\\],error)", ""));
 		while (m.find()) {
-			l.add(new KuWoMusicTool().Info(getByJson(m.group(), "id").replaceAll("MUSIC_", "")));
+			addMusic(l, new KuWoMusicTool().InfoJson(m.group().replaceAll("MUSIC_|\"", "")));
 		}
 		if (l.size() == 0) {
-			Matcher n = Pattern.compile("mid=\"\\d+\"").matcher(page);
-			while (n.find()) {
-				l.add(new KuWoMusicTool().Info(n.group().replaceAll("mid=|\"", "")));
-			}
+			KUWOMusicInfoList(link, l);
 		}
 	}
 
@@ -91,7 +91,7 @@ public class OtherMusicUtils extends WebMusicTools {
 		}
 		Iterator<String> it = hashSet.iterator();
 		while (it.hasNext()) {
-			tmp = checkAndroid(LinkList.KuGouSearchSongHashLink + it.next());
+			tmp = checkAndroid(LinkList.KuGouSearchSongHashJsonLink + it.next(),doghs);
 			tmp = UnicodeToString(tmp);
 			new KuGouTool().PrivateInfoList(tmp, "", l);
 		}
@@ -102,15 +102,15 @@ public class OtherMusicUtils extends WebMusicTools {
 				.matcher(checkAndroid(LinkList.CloudMusicSongSearchLink + URLEncode(search_name)
 						+ LinkList.CloudMusicSongSearchLinkEnd + LinkList.CloudMusicSongSearchNum + music_num));
 		while (M.find()) {
-			l.add(new CloudMusic163Tool().getSongInfo(getByString(M.group(), "id\":\\d+", "id|:|\"")));
+			addMusic(l, new CloudMusic163Tool().getSongInfo(getByString(M.group(), "id\":\\d+", "id|:|\"")));
 		}
 	}
 
 	public void CLOUD163MusicList(String link, List<WebMusicInfo> l) {
-		Matcher MusicName = Pattern.compile("song(.+?id)(.+?\\d+\")").matcher(checkAndroid(link));
+		Matcher MusicName = Pattern.compile("song(.+?id)(.+?\\d+\")").matcher(checkAndroid(link.replaceAll("#", "")));
 		while (MusicName.find()) {
 			if (MusicName.group().replaceAll("song\\?id=|\"", "").indexOf("b") == -1) {
-				l.add(new CloudMusic163Tool().getSongInfo(MusicName.group().replaceAll("song\\?id=|\"", "")));
+				addMusic(l, new CloudMusic163Tool().getSongInfo(MusicName.group().replaceAll("song\\?id=|\"", "")));
 			}
 		}
 	}
@@ -189,4 +189,5 @@ public class OtherMusicUtils extends WebMusicTools {
 		checkMusicList(link, l, type);
 		return l;
 	}
+	
 }

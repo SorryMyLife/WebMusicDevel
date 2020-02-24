@@ -25,20 +25,45 @@ public class KuWoMusicTool extends WebMusicTools {
 	 */
 	public WebMusicInfo Info(String song_id) {
 		WebMusicInfo musicInfo = new WebMusicInfo();
-		String song_info_page = checkAndroid(LinkList.KuWoMusicSongInfoLink + song_id);
-		String sing_name = getByString(song_info_page, "artist/con(.+?data-id)\\S+</a", "");
-		String album = getByString(song_info_page, "album/\\d+\\S+</a", "album/\\d+|</a|\"");
+		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongInfoLink + song_id), "songinfo:(.+?payInfo)", "");
+		System.out.println(LinkList.KuWoMusicSongInfoLink + song_id);
 		musicInfo.setMusicHash(song_id);
-		musicInfo.setMusicName(getByString(song_info_page, "lrcName\\S+<", "lrcName|>|<|\""));
-		musicInfo.setSingerName(getByString(sing_name, ">\\S+<", ">|<"));
-		musicInfo.setAlbumName(album.replaceAll("/>", ""));
-		musicInfo.setMusicImg(getByString(song_info_page, "photopic(.+?.(jpg|png|jpeg))", "photopic|src=|\""));
-		musicInfo.setDownloadLink(LinkList.KuWoMusicDownloadLink + musicInfo.getMusicHash().replaceAll(" ", "")
+		musicInfo.setMusicName(getByString(song_info_page, ",name"+math, ",name:|\""));
+		musicInfo.setSingerName(getByString(song_info_page, "artist"+math,"artist:|\""));
+		musicInfo.setAlbumName(getByString(song_info_page, "album"+math, "album:|\""));
+		musicInfo.setMusicImg(UnicodeToString(getByString(song_info_page, "pic"+math, "pic:|\"")));
+		musicInfo.setDownloadLink(LinkList.KuWoMusicDownloadLink + musicInfo.getMusicHash().replaceAll("\\s+", "")
 				+ LinkList.KuWoMusicDownloadLinkEnd);
 		musicInfo.setAuxiliary("本版本不提供此功能");
 		musicInfo.setVideoId("本版本不提供此功能");
 		String fileName = musicInfo.getSingerName() + "-" + musicInfo.getMusicName();
 		musicInfo.setFileName(fileName.replaceAll("\\s+", ""));
+//		System.out.println(musicInfo.getAllToCloud());
+		return musicInfo;
+	}
+	
+	/**
+	 * <p>
+	 * 获取歌曲信息
+	 * <p>
+	 * 需要传入一个参数：歌曲id
+	 */
+	public WebMusicInfo InfoJson(String song_id) {
+		WebMusicInfo musicInfo = new WebMusicInfo();
+		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongJsonInfoLink + song_id), "songinfo(.+?msg)" , "");
+//		System.out.println(song_info_page);
+		musicInfo.setMusicHash(song_id);
+		musicInfo.setMusicName(getByJson(song_info_page, "songName"));
+		musicInfo.setSingerName(getByJson(song_info_page, "artist"));
+		musicInfo.setAlbumName(getByJson(song_info_page, "album"));
+		musicInfo.setMusicImg(getByJson(song_info_page, "pic"));
+		musicInfo.setDownloadLink(LinkList.KuWoMusicDownloadLink + musicInfo.getMusicHash().replaceAll("\\s+", "")
+				+ LinkList.KuWoMusicDownloadLinkEnd);
+		musicInfo.setAuxiliary("本版本不提供此功能");
+		musicInfo.setVideoId("本版本不提供此功能");
+		String fileName = musicInfo.getSingerName() + "-" + musicInfo.getMusicName();
+		musicInfo.setFileName(fileName.replaceAll("\\s+", ""));
+//		System.out.println(musicInfo.getAllToCloud());
 		return musicInfo;
 	}
 }

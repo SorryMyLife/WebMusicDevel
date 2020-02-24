@@ -14,7 +14,7 @@ package com.NewWebMusic.MusicType;
  * @version 1.0
  * @since JDK 1.8 文件名称：MusicTypeList.java
  */
-public class MusicTypeList {
+public class NewMusicTypeList {
 
 	/** 设置音乐类型为咪咕音乐 */
 	public final static String TYPE_MIGU = "migu";

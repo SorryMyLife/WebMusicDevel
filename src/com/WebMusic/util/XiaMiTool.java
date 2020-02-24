@@ -3,6 +3,7 @@ package com.WebMusic.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
+@Deprecated
 /**
  * <p>
  * 创建时间：2019年1月22日 下午6:12:35

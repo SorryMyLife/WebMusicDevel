@@ -20,7 +20,7 @@ import com.WebMusic.util.LinkList;
  * @version 1.0
  * @since JDK 1.8 文件名称：getMusicType.java
  */
-public class MusicType extends NewOtherMusicUtils {
+public class NewMusicType extends NewOtherMusicUtils {
 	/**
 	 * <p>
 	 * 获取音乐类型属性

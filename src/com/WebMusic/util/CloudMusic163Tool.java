@@ -25,17 +25,19 @@ public class CloudMusic163Tool extends WebMusicTools {
 	 */
 	public WebMusicInfo getSongInfo(String song_id) {
 		String ss = checkAndroid(LinkList.CloudMusicSongInfoLink + song_id);
+//		System.out.println(LinkList.CloudMusicSongInfoLink + song_id);
 		WebMusicInfo musicInfo = new WebMusicInfo();
 		musicInfo.setMusicHash(song_id);
-		musicInfo.setSingerName(getByString(ss, "<span title=(.+?<a class)", "<span title=|<a class|>|\""));
-		musicInfo.setMusicName(getByString(ss, "f-ff2\">\\S+</em>", "f-ff2\">|</em>"));
-		musicInfo.setMusicImg(getByString(ss, " data-src(.+?.(jpg|png|jpeg))", "data-src=|\""));
+		musicInfo.setSingerName(getByString(ss, "<spantitle=(.+?<aclass)", "<spantitle=|<aclass|>|\""));
+		musicInfo.setMusicName(getByString(ss, "f-ff2\">(.+?)</em>", "f-ff2\">|</em>"));
+		musicInfo.setMusicImg(getByString(ss, "images(.+?],)","images|:|\\[|\\]|\"|,"));
 		musicInfo.setAlbumName(getByString(ss, "class=\"s-fc7\">(.+?</a>)", "class=\"s-fc7|>|</a|\""));
-		musicInfo.setAuxiliary(getByString(ss, "f-ff2\"\\W+</div", "f-ff2|</div|>|\""));
+		musicInfo.setAuxiliary("δ�ṩ");
 		musicInfo.setVideoId(getByString(ss, "/mv(.+?>)", "/mv\\?id=|\">"));
 		String fileName = musicInfo.getSingerName() + "-" + musicInfo.getMusicName();
 		musicInfo.setFileName(fileName.replaceAll("\\s+", ""));
 		musicInfo.setDownloadLink(LinkList.CloudMusicDownloadSongLink + musicInfo.getMusicHash());
+//		System.out.println(musicInfo.getAllToCloud());
 		return musicInfo;
 	}
 }

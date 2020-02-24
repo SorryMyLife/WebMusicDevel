@@ -1,6 +1,6 @@
 package com.NewWebMusic;
 
-import com.NewWebMusic.MusicType.MusicTypeList;
+import com.NewWebMusic.MusicType.NewMusicTypeList;
 import com.WebMusic.KuGouMusic;
 import com.WebMusic.util.WebMusicInfo;
 
@@ -26,7 +26,7 @@ import com.WebMusic.util.WebMusicInfo;
  */
 public class NewKuGou extends NewOtherMusic {
 	public NewKuGou() {
-		setType(MusicTypeList.TYPE_KUGOU);
+		setType(NewMusicTypeList.TYPE_KUGOU);
 	}
 
 	@Override

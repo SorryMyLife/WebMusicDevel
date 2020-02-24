@@ -14,7 +14,8 @@ public class MusicTypeList {
 	
 	/**<p>酷狗音乐类型*/
 	public final static String KUGOU = "kg";
-	/**<p>虾米音乐类型*/
+	@Deprecated
+	/**<p>虾米音乐类型<p>不再维护*/
 	public final static String XIAMI = "xm";
 	/**<p>QQ音乐类型*/
 	public final static String QQ = "qq";

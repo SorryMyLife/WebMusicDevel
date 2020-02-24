@@ -1,6 +1,6 @@
 package com.NewWebMusic;
 
-import com.NewWebMusic.MusicType.MusicTypeList;
+import com.NewWebMusic.MusicType.NewMusicTypeList;
 import com.NewWebMusic.util.NewOtherMusicUtils;
 import com.WebMusic.WebMusic;
 import com.WebMusic.util.WebMusicInfo;
@@ -95,18 +95,18 @@ public class NewOtherMusic implements WebMusic {
 	 */
 	public String checkType(String type) {
 		String t = "";
-		if (type.equals(MusicTypeList.TYPE_XIAMI)) {
-			t = MusicTypeList.TYPE_XIAMI;
-		} else if (type.equals(MusicTypeList.TYPE_CLOUD163)) {
-			t = MusicTypeList.TYPE_CLOUD163;
-		} else if (type.equals(MusicTypeList.TYPE_KUGOU)) {
-			t = MusicTypeList.TYPE_KUGOU;
-		} else if (type.equals(MusicTypeList.TYPE_KUWO)) {
-			t = MusicTypeList.TYPE_KUWO;
-		} else if (type.equals(MusicTypeList.TYPE_QQ)) {
-			t = MusicTypeList.TYPE_QQ;
+		if (type.equals(NewMusicTypeList.TYPE_XIAMI)) {
+			t = NewMusicTypeList.TYPE_XIAMI;
+		} else if (type.equals(NewMusicTypeList.TYPE_CLOUD163)) {
+			t = NewMusicTypeList.TYPE_CLOUD163;
+		} else if (type.equals(NewMusicTypeList.TYPE_KUGOU)) {
+			t = NewMusicTypeList.TYPE_KUGOU;
+		} else if (type.equals(NewMusicTypeList.TYPE_KUWO)) {
+			t = NewMusicTypeList.TYPE_KUWO;
+		} else if (type.equals(NewMusicTypeList.TYPE_QQ)) {
+			t = NewMusicTypeList.TYPE_QQ;
 		} else {
-			t = MusicTypeList.TYPE_QQ;
+			t = NewMusicTypeList.TYPE_QQ;
 		}
 		return t;
 	}

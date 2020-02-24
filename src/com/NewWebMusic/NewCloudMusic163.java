@@ -1,6 +1,6 @@
 package com.NewWebMusic;
 
-import com.NewWebMusic.MusicType.MusicTypeList;
+import com.NewWebMusic.MusicType.NewMusicTypeList;
 import com.WebMusic.CloudMusic163;
 import com.WebMusic.util.WebMusicInfo;
 
@@ -26,7 +26,7 @@ import com.WebMusic.util.WebMusicInfo;
  */
 public class NewCloudMusic163 extends NewOtherMusic {
 	public NewCloudMusic163() {
-		setType(MusicTypeList.TYPE_CLOUD163);
+		setType(NewMusicTypeList.TYPE_CLOUD163);
 	}
 
 	@Override

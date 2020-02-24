@@ -1,6 +1,6 @@
 package com.NewWebMusic;
 
-import com.NewWebMusic.MusicType.MusicTypeList;
+import com.NewWebMusic.MusicType.NewMusicTypeList;
 import com.WebMusic.QQMusic;
 import com.WebMusic.util.WebMusicInfo;
 
@@ -26,7 +26,7 @@ import com.WebMusic.util.WebMusicInfo;
  */
 public class NewQQMusic extends NewOtherMusic {
 	public NewQQMusic() {
-		setType(MusicTypeList.TYPE_QQ);
+		setType(NewMusicTypeList.TYPE_QQ);
 	}
 
 	@Override

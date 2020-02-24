@@ -1,6 +1,6 @@
 package com.NewWebMusic;
 
-import com.NewWebMusic.MusicType.MusicTypeList;
+import com.NewWebMusic.MusicType.NewMusicTypeList;
 import com.WebMusic.XiaMiMusic;
 import com.WebMusic.util.WebMusicInfo;
 
@@ -29,7 +29,7 @@ import com.WebMusic.util.WebMusicInfo;
 @SuppressWarnings("deprecation")
 public class NewXiaMi extends NewOtherMusic {
 	public NewXiaMi() {
-		setType(MusicTypeList.TYPE_XIAMI);
+		setType(NewMusicTypeList.TYPE_XIAMI);
 	}
 
 	@Override
