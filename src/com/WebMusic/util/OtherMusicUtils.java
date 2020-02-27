@@ -1,4 +1,5 @@
 package com.WebMusic.util;
+
 /**
 * <p>创建时间：2019年2月1日 下午4:14:23
 * <p>项目名称：WebMusic
@@ -20,19 +21,19 @@ import java.util.regex.Pattern;
 public class OtherMusicUtils extends WebMusicTools {
 
 	private String tmp;
-	
+
 	@Deprecated
 	public void XiaMiSong(String search_name, int i, List<WebMusicInfo> l) {
 		Matcher m = Pattern.compile("type=\"checkbox\"  value=\"\\d+\"").matcher(
 				checkAndroid(LinkList.XiaMiMusicSongSearchLinkHeadOld + LinkList.XiaMiMusicSongSearchNextPageLinkOld + i
 						+ LinkList.XiaMiMusicSongSearchKeyLinkOld + URLEncode(search_name)));
 		System.out.println(LinkList.XiaMiMusicSongSearchLinkHeadOld + LinkList.XiaMiMusicSongSearchNextPageLinkOld + i
-						+ LinkList.XiaMiMusicSongSearchKeyLinkOld + URLEncode(search_name));
+				+ LinkList.XiaMiMusicSongSearchKeyLinkOld + URLEncode(search_name));
 		while (m.find()) {
 			l.add(new XiaMiTool().getSongInfo(m.group().replaceAll("type=\"checkbox\"  value=|\"", "")));
 		}
 	}
-	
+
 	@Deprecated
 	public void XiaMiMusicList(String link, List<WebMusicInfo> l) {
 		Matcher m = Pattern.compile("href=\"/song/\\d+\"").matcher(checkAndroid(link));
@@ -63,7 +64,7 @@ public class OtherMusicUtils extends WebMusicTools {
 				.matcher(checkAndroid(LinkList.KuWoMusicSongSearchLink + URLEncode(search_name)
 						+ LinkList.KuWoMusicSongSearchLinkEnd + LinkList.KuWoMusicSongSearchLinkPage + i));
 		while (MusicHash.find()) {
-			addMusic(l,new KuWoMusicTool().InfoJson(MusicHash.group().replaceAll("MUSIC_|\"", "")));
+			addMusic(l, new KuWoMusicTool().InfoJson(MusicHash.group().replaceAll("MUSIC_|\"", "")));
 		}
 	}
 
@@ -91,7 +92,7 @@ public class OtherMusicUtils extends WebMusicTools {
 		}
 		Iterator<String> it = hashSet.iterator();
 		while (it.hasNext()) {
-			tmp = checkAndroid(LinkList.KuGouSearchSongHashJsonLink + it.next(),doghs);
+			tmp = checkAndroid(LinkList.KuGouSearchSongHashJsonLink + it.next(), doghs);
 			tmp = UnicodeToString(tmp);
 			new KuGouTool().PrivateInfoList(tmp, "", l);
 		}
@@ -189,5 +190,5 @@ public class OtherMusicUtils extends WebMusicTools {
 		checkMusicList(link, l, type);
 		return l;
 	}
-	
+
 }

@@ -31,7 +31,9 @@ public class KuGouTool extends WebMusicTools {
 		Matcher MusicHash = Pattern.compile("0,\"FileHash" + kg_match_str).matcher(data);
 		Matcher Auxiliary = Pattern.compile("Auxiliary" + kg_match_str).matcher(data);
 		while (MusicHash.find() && Auxiliary.find()) {
-			str = checkAndroid(LinkList.KuGouSearchSongHashJsonLink + MusicHash.group().replaceAll("0,\"FileHash|\"|:", ""),doghs);
+			str = checkAndroid(
+					LinkList.KuGouSearchSongHashJsonLink + MusicHash.group().replaceAll("0,\"FileHash|\"|:", ""),
+					doghs);
 			str = UnicodeToString(str);
 			PrivateInfoList(str, Auxiliary.group().replaceAll("Auxiliary|" + kg_re_str, ""), l);
 		}
@@ -68,5 +70,5 @@ public class KuGouTool extends WebMusicTools {
 		}
 		addMusic(l, musicInfo);
 	}
-	
+
 }

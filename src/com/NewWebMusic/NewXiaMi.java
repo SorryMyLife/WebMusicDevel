@@ -25,7 +25,6 @@ import com.WebMusic.util.WebMusicInfo;
  * @since JDK 1.8 ÎÄ¼şÃû³Æ£ºNewXiaMi.java
  */
 
-
 @SuppressWarnings("deprecation")
 public class NewXiaMi extends NewOtherMusic {
 	public NewXiaMi() {

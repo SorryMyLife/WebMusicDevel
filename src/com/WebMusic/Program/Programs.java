@@ -394,8 +394,7 @@ public class Programs {
 	public void write(String data) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(new File(ConfigureFile)));
-			bw.write(data);
-			bw.flush();
+			bw.append(data);
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -25,13 +25,14 @@ public class KuWoMusicTool extends WebMusicTools {
 	 */
 	public WebMusicInfo Info(String song_id) {
 		WebMusicInfo musicInfo = new WebMusicInfo();
-		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongInfoLink + song_id), "songinfo:(.+?payInfo)", "");
+		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongInfoLink + song_id),
+				"songinfo:(.+?payInfo)", "");
 		System.out.println(LinkList.KuWoMusicSongInfoLink + song_id);
 		musicInfo.setMusicHash(song_id);
-		musicInfo.setMusicName(getByString(song_info_page, ",name"+math, ",name:|\""));
-		musicInfo.setSingerName(getByString(song_info_page, "artist"+math,"artist:|\""));
-		musicInfo.setAlbumName(getByString(song_info_page, "album"+math, "album:|\""));
-		musicInfo.setMusicImg(UnicodeToString(getByString(song_info_page, "pic"+math, "pic:|\"")));
+		musicInfo.setMusicName(getByString(song_info_page, ",name" + math, ",name:|\""));
+		musicInfo.setSingerName(getByString(song_info_page, "artist" + math, "artist:|\""));
+		musicInfo.setAlbumName(getByString(song_info_page, "album" + math, "album:|\""));
+		musicInfo.setMusicImg(UnicodeToString(getByString(song_info_page, "pic" + math, "pic:|\"")));
 		musicInfo.setDownloadLink(LinkList.KuWoMusicDownloadLink + musicInfo.getMusicHash().replaceAll("\\s+", "")
 				+ LinkList.KuWoMusicDownloadLinkEnd);
 		musicInfo.setAuxiliary("本版本不提供此功能");
@@ -41,7 +42,7 @@ public class KuWoMusicTool extends WebMusicTools {
 //		System.out.println(musicInfo.getAllToCloud());
 		return musicInfo;
 	}
-	
+
 	/**
 	 * <p>
 	 * 获取歌曲信息
@@ -50,7 +51,8 @@ public class KuWoMusicTool extends WebMusicTools {
 	 */
 	public WebMusicInfo InfoJson(String song_id) {
 		WebMusicInfo musicInfo = new WebMusicInfo();
-		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongJsonInfoLink + song_id), "songinfo(.+?msg)" , "");
+		String song_info_page = getByString(checkAndroid(LinkList.KuWoMusicSongJsonInfoLink + song_id),
+				"songinfo(.+?msg)", "");
 //		System.out.println(song_info_page);
 		musicInfo.setMusicHash(song_id);
 		musicInfo.setMusicName(getByJson(song_info_page, "songName"));

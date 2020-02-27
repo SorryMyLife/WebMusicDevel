@@ -29,6 +29,7 @@ import com.WebMusicPro.util.WebMusicProInfo;
  * @version 1.0
  * @since JDK 1.8 ÎÄ¼þÃû³Æ£ºQQMusicPro.java
  */
+@Deprecated
 public class QQMusicProNoOhter implements WebMusicPro {
 	private final static String save = "e:\\WebMusic\\QQMusic\\";
 

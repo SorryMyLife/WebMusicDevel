@@ -39,22 +39,27 @@ import com.WebMusicPro.XiaMiMusicPro;
 @SuppressWarnings("deprecation")
 public class WebMusicProgram {
 
-	public void help() {
-		System.out.println("usage : -p | -new ");
-		System.out.println("    -p | -pro : 高级版本     ");
-		System.out.println("    -new : 新版本     ");
+	public void musichelp() {
 		System.out.println("    -kg : 酷狗音乐模式     ");
 		System.out.println("    -qq : QQ音乐模式     ");
-		System.out.println("    -xm : 虾米音乐模式     ");
+		System.out.println("    -xm : 虾米音乐模式     (3.0.5版本已不再被支持)");
 		System.out.println("    -kw : 酷我音乐模式     ");
-		System.out.println("    -c163 : 网易云音乐模式     \n\n");
+		System.out.println("    -c163 : 网易云音乐模式     ");
+	}
+	
+	public void help() {
+		System.out.println("usage : ");
+		System.out.println("    -p | -pro : 高级版本     (3.0.5版本已不再被支持)");
+		System.out.println("    -new : 新版本     ");
+		musichelp();
+		System.out.println("    -version : 输出版本号     \n\n");
 		info();
 	}
 
 	public void info() {
 		System.out.println("普通模式效率最高,但问题也是最多的\n" + "新模式效率比普通模式效率要低一些,但问题最少\n" + "高级模式效率最低,但内容更加丰富\n\n"
-				+ "本程序完成时间: 2019年4月19日\n" + "api工具完成时间: 2019年2月1日\n" + "更新时间: 2019年2月20日\n" + "\n感谢: \n"
-				+ "music.cccyun.cc\n" + "moresound.tk\n" + "各大音乐官方提供的api\n");
+				+ "本程序完成时间: 2019年4月19日\n" + "api工具完成时间: 2019年2月1日\n" + "更新时间: 2020年2月27日\n" + "\n感谢: \n"
+				+ "www.musictool.top\n" + "moresound.tk\n" + "各大音乐官方提供的api\n\n当前版本: 3.0.5\n\n");
 	}
 
 	public void ProSelect(String v) {
@@ -81,12 +86,21 @@ public class WebMusicProgram {
 			w = new CloudMusic163Pro();
 			break;
 		case "-h":
+		case "--h":
 		case "-help":
+		case "--help":
 			help();
 			break;
+		case "-v":
+		case "--v":
+		case "-version":
+		case "--version":
+			System.out.println("version : 3.0.5 ");
+			break;
 		default:
-			System.out.println("酷狗音乐模块!\n");
-			w = new KuGouMusicPro();
+			System.out.println("默认音乐模块!\n");
+			v=new Programs().getDefaultMusic();
+			ProSelect(v);
 			break;
 		}
 		if (w != null) {
@@ -118,12 +132,21 @@ public class WebMusicProgram {
 			w = new NewCloudMusic163();
 			break;
 		case "-h":
+		case "--h":
 		case "-help":
+		case "--help":
 			help();
 			break;
+		case "-v":
+		case "--v":
+		case "-version":
+		case "--version":
+			System.out.println("version : 3.0.5 ");
+			break;
 		default:
-			System.out.println("酷狗音乐模块!\n");
-			w = new NewKuGou();
+			System.out.println("默认音乐模块!\n");
+			v=new Programs().getDefaultMusic();
+			NewSelect(v);
 			break;
 		}
 		if (w != null) {
@@ -136,6 +159,12 @@ public class WebMusicProgram {
 		switch (v[0]) {
 		case "-p":
 		case "-pro":
+			System.out.println("高级版本已不再被支持,是否要继续使用?(y/n): ");
+			Scanner yn = new Scanner(System.in);
+			String yyyy = yn.nextLine();
+			if (yyyy.indexOf("n") != -1 || yyyy.indexOf("N") != -1) {
+				break;
+			}
 			ProSelect(v[1]);
 			break;
 		case "-new":
@@ -162,12 +191,21 @@ public class WebMusicProgram {
 			w = new CloudMusic163();
 			break;
 		case "-h":
+		case "--h":
 		case "-help":
+		case "--help":
 			help();
 			break;
+		case "-v":
+		case "--v":
+		case "-version":
+		case "--version":
+			System.out.println("version : 3.0.5 ");
+			break;
 		default:
-			System.out.println("酷狗音乐模块!\n");
-			w = new KuGouMusic();
+			System.out.println("默认音乐模块!\n");
+			v[0]=new Programs().getDefaultMusic();
+			select(v);
 			break;
 		}
 		if (w != null) {
@@ -189,18 +227,23 @@ public class WebMusicProgram {
 			System.out.print("是否设置配置文件?(y|n): ");
 			Scanner s = new Scanner(System.in);
 			String str = s.nextLine();
-			switch(str) {
+			switch (str) {
 			case "y":
 			case "Y":
 				System.out.print("输入保存路径: ");
 				s = new Scanner(System.in);
 				str = s.nextLine();
 				p.setSavePath(str);
+				System.out.print("输入默认音乐: ");
+				musichelp();
+				s = new Scanner(System.in);
+				String ss = s.nextLine();
+				p.setDefMusic(ss);
 				System.out.println("设置完成!\n请重新运行一下!");
 				break;
-				default:
-					System.exit(-1);
-					break;
+			default:
+				System.exit(-1);
+				break;
 			}
 		}
 	}

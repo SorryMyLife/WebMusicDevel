@@ -14,7 +14,7 @@ import com.WebMusicPro.util.WebMusicProInfo;
 * @since JDK 1.8
 * ÎÄ¼þÃû³Æ£ºWebMusicPro.java
 * */
-
+@Deprecated
 public interface WebMusicPro{
 	/**
 	 * <p>

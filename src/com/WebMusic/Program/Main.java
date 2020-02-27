@@ -1,12 +1,5 @@
 package com.WebMusic.Program;
 
-import com.NewWebMusic.NewOtherMusic;
-import com.NewWebMusic.MusicType.NewMusicTypeList;
-import com.WebMusic.OtherMusic;
-import com.WebMusic.util.MusicTypeList;
-import com.WebMusicPro.OtherMusicPro;
-import com.WebMusicPro.QQMusicProNoOhter;
-
 /**
 * <p>创建时间：2019年2月2日 下午5:45:36
 * <p>项目名称：WebMusic
@@ -31,12 +24,7 @@ public class Main {
 	 * 需要修复高级音乐
 	 * */
 	public static void main(String[] args) {
-		String tmpSavePath = "E:\\WebMusic\\test\\";
-//		new WebMusicProgram().menu(args);
-		QQMusicProNoOhter music = new QQMusicProNoOhter();
-		music.getInfo("陈奕迅");
-		
-		
+		new WebMusicProgram().menu(args);
 		
 	}
 

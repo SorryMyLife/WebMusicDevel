@@ -17,7 +17,7 @@ public class LinkList {
 	public final static String KuGouSearchSongLinkPage = "&page=";
 	public final static String KuGouSearchSongHashLink = "https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash=";
 	public final static String KuGouSearchSongHashJsonLink = "http://www.kugou.com/yy/index.php?r=play/getdata&hash=";
-	
+
 	public final static String CloudMusicSongSearchLink = "http://music.163.com/api/search/get/web?csrf_token=hlpretag=&hlposttag=&s=";
 	public final static String CloudMusicSongSearchLinkEnd = "&type=1&offset=0&total=true";
 	public final static String CloudMusicSongSearchNum = "&limit=";
@@ -44,24 +44,22 @@ public class LinkList {
 	public final static String KuWoMusicSongSearchLinkEnd = "&type=music";
 	public final static String KuWoMusicSongInfoLink = "http://www.kuwo.cn/yinyue/";
 	public final static String KuWoMusicSongJsonInfoLink = "http://m.kuwo.cn/newh5/singles/songinfoandlrc?musicId=";
-	
 
 	public final static String NewWebMusicHost = "http://www.musictool.top/";
-	
+
 	public final static String QQMusicProDownloadHead3 = "http://mobileoc.music.tc.qq.com/";
 	public final static String QQMusicProDownloadHead2 = "http://isure.stream.qqmusic.qq.com/";
 	public final static String QQMusicProDownloadHead = "http://dl.stream.qqmusic.qq.com/";
-	
-	
+
 	public final static String QQMusicProLink = "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg?cid=205361747&guid=0&songmid=";
 	public final static String QQMusicProLinkFileName = "&filename=";
-	
+
 	public final static String MusicProAPILink = "api.php";
-	public final static String MusicProSearchTypeLink = MusicProAPILink+"?search=";
-	public final static String MusicProGetSongLink = MusicProAPILink+"?get_song=";
+	public final static String MusicProSearchTypeLink = MusicProAPILink + "?search=";
+	public final static String MusicProGetSongLink = MusicProAPILink + "?get_song=";
 	public final static String MusicProSearchLink = "&w=";
 	public final static String MusicProPageLink = "&p=";
 	public final static String MusicProMusicNumLink = "&n=";
 	public final static String MusicProLink = "http://moresound.tk/music/";
-	
+
 }

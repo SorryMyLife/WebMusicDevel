@@ -13,7 +13,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -27,18 +26,20 @@ import com.WebMusicPro.util.QQMusicProUtils;
 import com.WebMusicPro.util.WebMusicProInfo;
 
 /**
-* <p>创建时间：2019年4月17日 下午6:29:54
-* <p>项目名称：WebMusic
-* 
-* <p>类说明：
-* 总工具实现功能类
-* @version 1.0
-* @since JDK 1.8
-* 文件名称：WebMusicTools.java
-* */
+ * <p>
+ * 创建时间：2019年4月17日 下午6:29:54
+ * <p>
+ * 项目名称：WebMusic
+ * 
+ * <p>
+ * 类说明： 总工具实现功能类
+ * 
+ * @version 1.0
+ * @since JDK 1.8 文件名称：WebMusicTools.java
+ */
 public class WebMusicTools {
-	
-	public String math=":\"(.+?\")";
+
+	public String math = ":\"(.+?\")";
 	public final static String cookie_bak = "",
 			ua_bak = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36",
 			match_s = "\"(.+?\")", kg_re_str = ":|,|\"", kg_match_str = "\":" + match_s,
@@ -46,32 +47,24 @@ public class WebMusicTools {
 	public int len = -1, size = -1, num = 0;
 	public List<WebMusicInfo> list = null;
 	public String array[] = null;
-	
-	private String cookie = "" , userAgent = "";
+
+	private String cookie = "", userAgent = "";
 	private final static int time = 3500;
-	private String header,headers[];
+	private String header, headers[];
 	private String headers_bak[] = {
 			"accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-			"accept-encoding: gzip, deflate, br",
-			"Content-Type: text/plain",
-			"Cache-Control: max-age=0",
-			"Connection: keep-alive",
-			"accept-language: zh-CN,zh;q=0.9"
-	};
-	
+			"accept-encoding: gzip, deflate, br", "Content-Type: text/plain", "Cache-Control: max-age=0",
+			"Connection: keep-alive", "accept-language: zh-CN,zh;q=0.9" };
+
 	public String doghs[] = {
-			"accept: text/html,application/xhtml,xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" , 
-			"accept-encoding: gzip, deflate, br" , 
-			"accept-language: zh-CN,zh;q=0.9" , 
-			"cache-control: max-age=0" , 
-			"cookie: kg_mid=6620da3132838588a74411987e879df3; kg_dfid=3dpiLo2jOchb0KlwMq05UWYD; ACK_SERVER_10016=%7B%22list%22%3A%5B%5B%22bjreg-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10015=%7B%22list%22%3A%5B%5B%22bjlogin-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10017=%7B%22list%22%3A%5B%5B%22bjverifycode.service.kugou.com%22%5D%5D%7D; Hm_lvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; Hm_lpvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e" , 
-			"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36" , 
-			"Host: www.kugou.com" 
-	};
-	
-	
+			"accept: text/html,application/xhtml,xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+			"accept-encoding: gzip, deflate, br", "accept-language: zh-CN,zh;q=0.9", "cache-control: max-age=0",
+			"cookie: kg_mid=6620da3132838588a74411987e879df3; kg_dfid=3dpiLo2jOchb0KlwMq05UWYD; ACK_SERVER_10016=%7B%22list%22%3A%5B%5B%22bjreg-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10015=%7B%22list%22%3A%5B%5B%22bjlogin-user.kugou.com%22%5D%5D%7D; ACK_SERVER_10017=%7B%22list%22%3A%5B%5B%22bjverifycode.service.kugou.com%22%5D%5D%7D; Hm_lvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; Hm_lpvt_aedee6983d4cfc62f509129360d6bb3d=1582356962; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e",
+			"user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.116 Safari/537.36",
+			"Host: www.kugou.com" };
+
 	private boolean isAndroid = false;
-	
+
 	public String getHeader() {
 		return header;
 	}
@@ -87,43 +80,44 @@ public class WebMusicTools {
 	public void setHeaders(String[] headers) {
 		this.headers = headers;
 	}
-	
-	public void addMusic(List<WebMusicInfo> l , WebMusicInfo musicInfo) {
-		if(musicInfo.getMusicName() != null && !musicInfo.getMusicName().equals("") && musicInfo.getMusicName().length() >0 && musicInfo.getAllToCloud().indexOf("</") == -1) {
+
+	public void addMusic(List<WebMusicInfo> l, WebMusicInfo musicInfo) {
+		if (musicInfo.getMusicName() != null && !musicInfo.getMusicName().equals("")
+				&& musicInfo.getMusicName().length() > 0 && musicInfo.getAllToCloud().indexOf("</") == -1) {
 			l.add(musicInfo);
 		}
 	}
-	
+
 	/**
 	 * <p>
 	 * 获取response的头部
-	 * */
+	 */
 	@SuppressWarnings("unused")
-	public String getResponseHeader(String url_name , String key) {
+	public String getResponseHeader(String url_name, String key) {
 		String getKey = "";
 		try {
 			HttpURLConnection hc = checkCon(url_name);
 			getKey = hc.getHeaderField(key);
-			if(getKey.equals(""))
+			if (getKey.equals(""))
 				getKey = "not get !";
-			else if(getKey == null)
+			else if (getKey == null)
 				getKey = "not get !";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return getKey;
 	}
-	
+
 	/**
 	 * <p>
 	 * 获取response的头部
-	 * */
+	 */
 	public String getResponseHeaders(String url_name) {
 		String getKey = "";
 		try {
 			HttpURLConnection hc = checkCon(url_name);
-			Map<String,List<String>> m = hc.getHeaderFields();
-			for(Entry<String, List<String>> e : m.entrySet()) {
+			Map<String, List<String>> m = hc.getHeaderFields();
+			for (Entry<String, List<String>> e : m.entrySet()) {
 				getKey += e.getKey() + " -- " + e.getValue() + "\n";
 			}
 		} catch (Exception e) {
@@ -131,7 +125,7 @@ public class WebMusicTools {
 		}
 		return getKey;
 	}
-	
+
 	/**
 	 * <p>
 	 * 读取本地文件
@@ -161,136 +155,117 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-	
-	
+
 	/**
 	 * <p>
 	 * 链接-文件名称-保存路径-文件后缀
-	 * */
-	public void MultiThreadDownlaodMusic(String link , String fileName , String savePath , String format)
-	{
-		new Thread() {@Override
+	 */
+	public void MultiThreadDownlaodMusic(String link, String fileName, String savePath, String format) {
+		new Thread() {
+			@Override
 			public void run() {
-				Downlaod(link, savePath, fileName, format);
-			}}.start();
+				if ((link != null && link.length() > 0 && !link.equals(""))
+						&& (fileName != null && fileName.length() > 0 && !fileName.equals(""))) {
+					Downlaod(link, savePath, fileName, format);
+				}
+			}
+		}.start();
 	}
-	
-	public void sleep(int times)
-	{
+
+	public void sleep(int times) {
 		try {
 			new Thread();
 			Thread.sleep(times);
 		} catch (InterruptedException e) {
-			
+
 			e.printStackTrace();
 		}
 	}
-	
-	/**配置是否为Android开发环境*/
-	public String checkAndroid(String url , String headers[]) {
-		url=url.replaceAll("\\s+", "");
-		String data = isAndroid() ? getPagesource(url) : getGzipPagesource(url,headers);
+
+	/** 配置是否为Android开发环境 */
+	public String checkAndroid(String url, String headers[]) {
+		url = url.replaceAll("\\s+", "");
+		String data = isAndroid() ? getPagesource(url) : getGzipPagesource(url, headers);
 		return data.replaceAll("\\s+", "");
 	}
-	
-	/**配置是否为Android开发环境*/
+
+	/** 配置是否为Android开发环境 */
 	public String checkAndroid(String url) {
 		return checkAndroid(url, null);
 	}
-	
-	public String checkOhterFormat(String format , String song_id , String Mtype)
-	{
+
+	public String checkOhterFormat(String format, String song_id, String Mtype) {
 		WebMusicProInfo w = new OtherMusicProUtils().Info(song_id, Mtype);
-		String f = "" , r = "" , type = "";
-		if(format.equals("ape"))
-		{
+		String f = "", r = "", type = "";
+		if (format.equals("ape")) {
 			f = MusicFormat.ApeEnd;
 			type = w.getAPE();
-		}else if(format.equals("flac"))
-		{
+		} else if (format.equals("flac")) {
 			f = MusicFormat.FlacEnd;
 			type = w.getFLAC();
-		}else if(format.equals("m320k"))
-		{
+		} else if (format.equals("m320k")) {
 			f = MusicFormat.QQ320kEnd;
 			type = w.getM320k();
-		}else if(format.equals("m128k"))
-		{
+		} else if (format.equals("m128k")) {
 			f = MusicFormat.QQ128kEnd;
 			type = w.getM128k();
-		}else
-		{
+		} else {
 			f = MusicFormat.m4aEnd;
 			type = w.getM4a();
 		}
-		r = f+"--"+type+"--"+w.getFileName();
+		r = f + "--" + type + "--" + w.getFileName();
 		return r;
 	}
-	
-	public String checkFormat(String format , String song_id)
-	{
+
+	public String checkFormat(String format, String song_id) {
 		WebMusicProInfo w = new QQMusicProUtils().getSongInfo(song_id, "", "");
-		String f = "" , r = "" , type = "";
-		if(format.equals("ape"))
-		{
+		String f = "", r = "", type = "";
+		if (format.equals("ape")) {
 			f = MusicFormat.ApeEnd;
 			type = w.getAPE();
-		}else if(format.equals("flac"))
-		{
+		} else if (format.equals("flac")) {
 			f = MusicFormat.FlacEnd;
 			type = w.getFLAC();
-		}else if(format.equals("m320k"))
-		{
+		} else if (format.equals("m320k")) {
 			f = MusicFormat.QQ320kEnd;
 			type = w.getM320k();
-		}else if(format.equals("m128k"))
-		{
+		} else if (format.equals("m128k")) {
 			f = MusicFormat.QQ128kEnd;
 			type = w.getM128k();
-		}else
-		{
+		} else {
 			f = MusicFormat.m4aEnd;
 			type = w.getM4a();
 		}
-		r = f+"--"+type+"--"+w.getFileName();
+		r = f + "--" + type + "--" + w.getFileName();
 		return r;
 	}
-	
+
 	/**
 	 * <p>
 	 * 链接-保存路径-保存名字-文件后缀
-	 * */
-	public void Downlaod(String url_name , String dirPath , String fileName , String format)
-	{
-		if(url_name.equals(""))
-		{
-			System.err.println("skip : "+fileName);
-		}else if(url_name.length() < 10)
-		{
-			System.err.println("skip : "+fileName);
-		}else
-		{
+	 */
+	public void Downlaod(String url_name, String dirPath, String fileName, String format) {
+		if (url_name.equals("")) {
+			System.err.println("skip : " + fileName);
+		} else if (url_name.length() < 10) {
+			System.err.println("skip : " + fileName);
+		} else {
 			File d = new File(dirPath);
-			if(!d.exists())
-			{
+			if (!d.exists()) {
 				d.mkdirs();
 				Downlaod(url_name, dirPath, fileName, format);
-			}else
-			{
-				File f = new File(dirPath+"/"+fileName+format);
-				if(f.exists())
-				{
-					System.err.println("file is exists : skip ------ " +f);
-				}else
-				{
+			} else {
+				File f = new File(dirPath + "/" + fileName + format);
+				if (f.exists()) {
+					System.err.println("file is exists : skip ------ " + f);
+				} else {
 					try {
 						InputStream in = checkCon(url_name).getInputStream();
 						FileOutputStream fos = new FileOutputStream(f);
 						int len = -1;
 						byte buff[] = new byte[1024];
-						System.err.println("start download : "+url_name);
-						while((len = in.read(buff)) != -1)
-						{
+						System.err.println("start download : " + url_name);
+						while ((len = in.read(buff)) != -1) {
 							fos.write(buff, 0, len);
 						}
 						fos.close();
@@ -305,9 +280,9 @@ public class WebMusicTools {
 			}
 		}
 	}
-	
+
 	public String getMusicListPageOnQQ(String link) {
-		String page = "" , line = "";
+		String page = "", line = "";
 		HttpURLConnection c = null;
 		try {
 			c = (HttpURLConnection) new URL(LinkList.QQMusicListLink).openConnection();
@@ -336,19 +311,19 @@ public class WebMusicTools {
 		}
 		return page;
 	}
-	
-	public String getPagesourceOnPost(String url_name , String parm) {
-		String line = "" , str = "";
+
+	public String getPagesourceOnPost(String url_name, String parm) {
+		String line = "", str = "";
 		try {
 			HttpURLConnection huc = (HttpURLConnection) new URL(url_name).openConnection();
 			huc.setRequestMethod("POST");
 			huc.setConnectTimeout(time);
-			if(getHeader()!=null) {
+			if (getHeader() != null) {
 				String s[] = getHeader().split(":");
 				huc.setRequestProperty(s[0], s[1].replaceAll("\\s+", ""));
 			}
-			if(getHeaders()!=null) {
-				for(String ss : getHeaders()) {
+			if (getHeaders() != null) {
+				for (String ss : getHeaders()) {
 					String s[] = ss.split(":");
 					huc.setRequestProperty(s[0], s[1].replaceAll("\\s+", ""));
 				}
@@ -368,7 +343,7 @@ public class WebMusicTools {
 			osw.write(parm);
 			osw.flush();
 			BufferedReader br = new BufferedReader(new InputStreamReader(huc.getInputStream(), "utf-8"));
-			while((line = br.readLine()) != null) {
+			while ((line = br.readLine()) != null) {
 				str += line + "\n";
 			}
 			br.close();
@@ -378,19 +353,19 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-	
-	public String getGzipPagesourceOnPost(String url_name , String parm) {
-		String line = "" , str = "";
+
+	public String getGzipPagesourceOnPost(String url_name, String parm) {
+		String line = "", str = "";
 		try {
 			HttpURLConnection huc = (HttpURLConnection) new URL(url_name).openConnection();
 			huc.setRequestMethod("POST");
 			huc.setConnectTimeout(time);
-			if(getHeader()!=null) {
+			if (getHeader() != null) {
 				String s[] = getHeader().split(":");
 				huc.setRequestProperty(s[0], s[1].replaceAll("\\s+", ""));
 			}
-			if(getHeaders()!=null) {
-				for(String ss : getHeaders()) {
+			if (getHeaders() != null) {
+				for (String ss : getHeaders()) {
 					String s[] = ss.split(":");
 					huc.setRequestProperty(s[0], s[1].replaceAll("\\s+", ""));
 				}
@@ -409,8 +384,9 @@ public class WebMusicTools {
 			OutputStreamWriter osw = new OutputStreamWriter(huc.getOutputStream());
 			osw.write(parm);
 			osw.flush();
-			BufferedReader br = new BufferedReader(new InputStreamReader(new GZIPInputStream(huc.getInputStream()), "utf-8"));
-			while((line = br.readLine()) != null) {
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(new GZIPInputStream(huc.getInputStream()), "utf-8"));
+			while ((line = br.readLine()) != null) {
 				str += line + "\n";
 			}
 			br.close();
@@ -420,7 +396,7 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-	
+
 	public HttpURLConnection checkCon(String url_name) throws Exception {
 //		String ua_bak = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36";
 		HttpURLConnection huc = (HttpURLConnection) new URL(url_name).openConnection();
@@ -435,16 +411,16 @@ public class WebMusicTools {
 		}
 		return huc;
 	}
-	
+
 	/**
 	 * <p>
 	 * 获取普通网页,html格式
 	 */
 
 	public String getPagesource(String url_name) {
-		String str = "" , line = "";
+		String str = "", line = "";
 		try {
-			if(getHeaders() == null) {
+			if (getHeaders() == null) {
 				setHeaders(headers_bak);
 			}
 			BufferedReader br = new BufferedReader(new InputStreamReader(checkCon(url_name).getInputStream(), "utf-8"));
@@ -457,17 +433,17 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-	
+
 	/**
 	 * <p>
 	 * 获取gzip传输格式的网页内容
 	 */
 
-	public String getGzipPagesource(String url_name , String hs[]) {
-		String str = "" , line = "";
+	public String getGzipPagesource(String url_name, String hs[]) {
+		String str = "", line = "";
 		try {
 			setHeaders(hs);
-			if(getHeaders() == null) {
+			if (getHeaders() == null) {
 				setHeaders(headers_bak);
 			}
 			BufferedReader br = new BufferedReader(
@@ -481,8 +457,7 @@ public class WebMusicTools {
 		}
 		return str;
 	}
-	
-	
+
 	/**
 	 * <p>
 	 * 获取gzip传输格式的网页内容
@@ -501,12 +476,12 @@ public class WebMusicTools {
 		try {
 			tmp = URLEncoder.encode(src, "utf-8");
 		} catch (UnsupportedEncodingException e) {
-			
+
 			e.printStackTrace();
 		}
 		return tmp;
 	}
-	
+
 	/**
 	 * <p>
 	 * 将字符串转义为Unicode编码
@@ -553,7 +528,7 @@ public class WebMusicTools {
 	public String UnicodeToString(String unicode) // Unicode转String用的，因为这个酷狗音乐非常鸡肋，歌名、歌手、简介居然用的都是Unicode编码，不得不转一下，不然没法用
 	{
 		Matcher m = Pattern.compile("(\\\\u(\\p{XDigit}{4}))").matcher(unicode);
-		String tmp = "" , str = "";
+		String tmp = "", str = "";
 		char ch;
 		while (m.find()) {
 			tmp = m.group(2);
@@ -564,12 +539,11 @@ public class WebMusicTools {
 
 		return unicode;
 	}
-	
-	public String getByJson(String src , String name)
-	{
-		return getByString(src, "\""+name+"\":(.+?\")", name+"\":|\"");
+
+	public String getByJson(String src, String name) {
+		return getByString(src, "\"" + name + "\":(.+?\")", name + "\":|\"");
 	}
-	
+
 	public String getByString(String src, String reg, String re_str) {
 		String t = "";
 		Matcher m = Pattern.compile(reg).matcher(src);
@@ -578,7 +552,7 @@ public class WebMusicTools {
 		}
 		return t;
 	}
-	
+
 	public String getCookie() {
 		return cookie;
 	}
@@ -615,7 +589,7 @@ public class WebMusicTools {
 			str += w.getQQProAll() + "\n";
 			n++;
 		}
-		System.err.println("一共遍历出: "+n+" 个数据");
+		System.err.println("一共遍历出: " + n + " 个数据");
 		return str;
 	}
 
@@ -635,7 +609,7 @@ public class WebMusicTools {
 	 * @return WebMusicInfo
 	 */
 	public WebMusicProInfo[] printListInfoOnPro(List<WebMusicProInfo> l) {
-		int num = 0,size = l.size();
+		int num = 0, size = l.size();
 		int n = 0;
 		WebMusicProInfo musicInfoArray[] = new WebMusicProInfo[size];
 		for (WebMusicProInfo w : l) {
@@ -643,10 +617,10 @@ public class WebMusicTools {
 			num++;
 			n++;
 		}
-		System.err.println("一共遍历出: "+n+" 个数据");
+		System.err.println("一共遍历出: " + n + " 个数据");
 		return musicInfoArray;
 	}
-	
+
 	/**
 	 * <p>
 	 * 直接输出带有歌曲信息的链表
@@ -667,7 +641,7 @@ public class WebMusicTools {
 			str += w.getAllToCloud() + "\n";
 			n++;
 		}
-		System.err.println("一共遍历出: "+n+" 个数据\n");
+		System.err.println("一共遍历出: " + n + " 个数据\n");
 		return str;
 	}
 
@@ -696,11 +670,11 @@ public class WebMusicTools {
 			num++;
 			n++;
 		}
-		System.err.println("一共遍历出: "+n+" 个数据\n");
+		System.err.println("一共遍历出: " + n + " 个数据\n");
 		return musicInfoArray;
 	}
-	
-	/**用来判断是否为Android开发环境*/
+
+	/** 用来判断是否为Android开发环境 */
 	public boolean isAndroid() {
 		return isAndroid;
 	}
@@ -708,5 +682,5 @@ public class WebMusicTools {
 	public void setAndroid(boolean isAndroid) {
 		this.isAndroid = isAndroid;
 	}
-	
+
 }

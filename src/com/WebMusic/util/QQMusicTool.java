@@ -68,9 +68,8 @@ public class QQMusicTool extends WebMusicTools {
 		Matcher mid = Pattern.compile("songmid\":\"(.+?\")").matcher(data);
 		Matcher vid = Pattern.compile("vid\":\"(.+?\")").matcher(data);
 		Matcher aux = Pattern.compile("lyric\":\"(.+?\")").matcher(data);
-		while(mid.find() && vid.find() && aux.find()) {
-			addMusic(l, getSongInfo(mid.group().replaceAll("songmid|:|\"", ""),
-					vid.group().replaceAll("vid|:|\"", ""),
+		while (mid.find() && vid.find() && aux.find()) {
+			addMusic(l, getSongInfo(mid.group().replaceAll("songmid|:|\"", ""), vid.group().replaceAll("vid|:|\"", ""),
 					aux.group().replaceAll("lyric|:|\"|,", "")));
 		}
 	}
@@ -82,7 +81,8 @@ public class QQMusicTool extends WebMusicTools {
 	 * 需要传入一个参数，歌曲ID
 	 */
 	public String getDownLink(String song_id) {
-		String downloadLink = checkAndroid(LinkList.QQMusicSongDownloadPage + song_id + LinkList.QQMusicSongDownloadPageEnd);
+		String downloadLink = checkAndroid(
+				LinkList.QQMusicSongDownloadPage + song_id + LinkList.QQMusicSongDownloadPageEnd);
 		downloadLink = LinkList.QQMusicSongDownloadHead + getByJson(downloadLink, "purl");
 		return downloadLink;
 	}

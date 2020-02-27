@@ -141,7 +141,8 @@ public class NewOtherMusic implements WebMusic {
 
 	@Override
 	public String getInfoToString(String search_name) {
-		return new WebMusicTools().printListString(new NewOtherMusicUtils().getInfoList(search_name, checkType(getType())));
+		return new WebMusicTools()
+				.printListString(new NewOtherMusicUtils().getInfoList(search_name, checkType(getType())));
 	}
 
 	@Override
@@ -196,8 +197,8 @@ public class NewOtherMusic implements WebMusic {
 
 	@Override
 	public String getInfoToString(String search_name, int startPage, int endPage) {
-		return new WebMusicTools()
-				.printListString(new NewOtherMusicUtils().getInfoList(search_name, startPage, endPage, checkType(getType())));
+		return new WebMusicTools().printListString(
+				new NewOtherMusicUtils().getInfoList(search_name, startPage, endPage, checkType(getType())));
 	}
 
 	@Override
@@ -208,8 +209,8 @@ public class NewOtherMusic implements WebMusic {
 
 	@Override
 	public WebMusicInfo[] getInfoToWebMusicInfo(String search_name, int startPage, int endPage) {
-		return new WebMusicTools()
-				.printListInfo(new NewOtherMusicUtils().getInfoList(search_name, startPage, endPage, checkType(getType())));
+		return new WebMusicTools().printListInfo(
+				new NewOtherMusicUtils().getInfoList(search_name, startPage, endPage, checkType(getType())));
 	}
 
 	@Override

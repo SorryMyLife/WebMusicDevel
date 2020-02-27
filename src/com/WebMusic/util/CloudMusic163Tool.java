@@ -30,7 +30,7 @@ public class CloudMusic163Tool extends WebMusicTools {
 		musicInfo.setMusicHash(song_id);
 		musicInfo.setSingerName(getByString(ss, "<spantitle=(.+?<aclass)", "<spantitle=|<aclass|>|\""));
 		musicInfo.setMusicName(getByString(ss, "f-ff2\">(.+?)</em>", "f-ff2\">|</em>"));
-		musicInfo.setMusicImg(getByString(ss, "images(.+?],)","images|:|\\[|\\]|\"|,"));
+		musicInfo.setMusicImg(getByString(ss, "images(.+?],)", "images|:|\\[|\\]|\"|,"));
 		musicInfo.setAlbumName(getByString(ss, "class=\"s-fc7\">(.+?</a>)", "class=\"s-fc7|>|</a|\""));
 		musicInfo.setAuxiliary("δ�ṩ");
 		musicInfo.setVideoId(getByString(ss, "/mv(.+?>)", "/mv\\?id=|\">"));

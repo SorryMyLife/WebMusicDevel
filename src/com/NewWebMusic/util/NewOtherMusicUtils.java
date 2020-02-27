@@ -33,14 +33,13 @@ public class NewOtherMusicUtils extends WebMusicTools {
 	public void InfoList(String music_name, String type, int page, List<WebMusicInfo> list) {
 		music_name = URLEncode(music_name);
 		String url_name = LinkList.NewWebMusicHost + "/?name=" + music_name + "&type=" + type, tmp = "";
-		String headers[] = { "Accept: application/json, text/javascript, */*; q=0.01", 
+		String headers[] = { "Accept: application/json, text/javascript, */*; q=0.01",
 				"Accept-Language: zh-CN,zh;q=0.9", "Connection: keep-alive",
 				"Content-Type: application/x-www-form-urlencoded; charset=UTF-8", "Host: www.musictool.top",
 				"Origin: " + LinkList.NewWebMusicHost, "Referer: " + url_name, "X-Requested-With: XMLHttpRequest" };
 		try {
 			setHeaders(headers);
-			tmp = getPagesourceOnPost(url_name,
-					"input=" + music_name + "&filter=name&type=" + type + "&page=" + page);
+			tmp = getPagesourceOnPost(url_name, "input=" + music_name + "&filter=name&type=" + type + "&page=" + page);
 			tmp = UnicodeToString(tmp);
 			Matcher m = Pattern.compile("\\{(.+?\\})").matcher(tmp);
 			while (m.find()) {
